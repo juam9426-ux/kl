@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Fire Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7439406925260802"
+     crossorigin="anonymous"></script>
+<style>
+:root{
+  --gold:#ffc400;
+  --gold-bright:#ffe066;
+  --purple-dark:#0d0820;
+  --purple-mid:#1a1035;
+  --purple-deep:#2a1240;
+  --blue-store:#0f5f8f;
+  --navy:#020c1c;
+  --accent:#ff4444;
+  --glow: 0 0 20px rgba(255,196,0,0.4);
+  --glow-lg: 0 0 40px rgba(255,196,0,0.3);
+}
+html{scroll-behavior:smooth;}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Rajdhani',Arial,sans-serif;background:var(--purple-dark);color:white;overflow-x:hidden;}
+
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:15px 50px;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  position:sticky;top:0;z-index:1000;
+  border-bottom:1px solid rgba(255,196,0,0.15);
+  transition:background .3s, box-shadow .3s;
+}
+nav.scrolled{background:rgba(0,0,0,0.95);box-shadow:0 4px 30px rgba(0,0,0,0.5);}
+.left{display:flex;align-items:center;gap:20px;}
+.logo{width:45px;filter:drop-shadow(0 0 8px rgba(255,196,0,0.5));}
+.menu a{color:rgba(255,255,255,0.8);margin:0 10px;text-decoration:none;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;letter-spacing:1px;transition:color .2s;position:relative;}
+.menu a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width .2s;}
+.menu a:hover{color:var(--gold);}
+.menu a:hover::after{width:100%;}
+.btn-top{background:linear-gradient(135deg,var(--gold),#ff8c00);padding:10px 22px;border:none;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;cursor:pointer;color:#000;clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);transition:transform .15s, box-shadow .15s;box-shadow:var(--glow);}
+.btn-top:hover{transform:scale(1.05);box-shadow:var(--glow-lg);}
+
+.hero{min-height:100vh;padding:80px 20px;background:url("https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20255/792f0508b08f3f324bd37eefcd07e2ed.jpg") center/cover;display:flex;align-items:center;justify-content:flex-start;padding-left:80px;position:relative;}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,8,32,0.9) 0%,rgba(13,8,32,0.5) 60%,transparent 100%);}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%, rgba(255,196,0,0.08) 0%, transparent 60%);}
+.hero-content{position:relative;z-index:1;}
+.hero-badge{display:inline-block;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.4);padding:6px 16px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:20px;animation:fadeInDown .6s ease forwards;}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:42px;font-weight:700;margin:0;line-height:1.1;text-shadow:0 2px 20px rgba(0,0,0,0.8);animation:fadeInLeft .7s .1s ease both;}
+.hero span{font-family:'Orbitron',sans-serif;font-size:68px;font-weight:900;display:block;background:linear-gradient(135deg,var(--gold),#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;animation:fadeInLeft .7s .2s ease both;line-height:1;}
+.hero-sub{color:rgba(255,255,255,0.7);font-size:16px;margin:15px 0 30px;font-weight:500;letter-spacing:1px;animation:fadeInLeft .7s .3s ease both;}
+.hero-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 38px;border:none;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;cursor:pointer;color:#000;clip-path:polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);position:relative;overflow:hidden;box-shadow:var(--glow-lg), 0 8px 32px rgba(0,0,0,0.4);animation:fadeInLeft .7s .4s ease both;transition:transform .15s,box-shadow .15s;}
+.hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,0.25),transparent);transform:translateX(-100%);transition:transform .4s;}
+.hero-btn:hover::after{transform:translateX(100%);}
+.hero-btn:hover{transform:scale(1.04);box-shadow:0 0 50px rgba(255,196,0,0.5),0 8px 32px rgba(0,0,0,0.4);}
+
+.news{padding:80px 60px;background:linear-gradient(#0d0820,var(--purple-mid));text-align:center;}
+.section-label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:4px;color:var(--gold);margin-bottom:10px;}
+.news h2{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:700;margin-bottom:10px;}
+.section-line{width:60px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin:0 auto 40px;}
+.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;}
+.news-card{text-align:left;cursor:pointer;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;}
+.news-card:hover{transform:translateY(-5px);border-color:rgba(255,196,0,0.35);box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 20px rgba(255,196,0,0.1);}
+.news-card img{width:100%;height:160px;object-fit:cover;transition:transform .4s;}
+.news-card:hover img{transform:scale(1.05);}
+.news-card-body{padding:12px 14px 16px;}
+.news-cat{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:6px;}
+.news-title{font-size:13px;font-weight:600;line-height:1.5;color:rgba(255,255,255,0.9);}
+.meta{font-size:11px;color:rgba(255,255,255,0.4);margin-top:8px;}
+
+.cta{position:relative;min-height:100vh;padding:80px 20px;background:url("https://media.vandal.net/master/2-2021/202121113175767_1.jpg") center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;}
+.cta-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(42,10,80,0.9),rgba(0,0,0,0.75));}
+.cta-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:15px;}
+.cta h1{font-family:'Orbitron',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1.1;text-shadow:0 0 40px rgba(255,196,0,0.4);}
+.pack-img{width:220px;margin:10px auto;filter:drop-shadow(0 10px 30px rgba(255,196,0,0.3));animation:float 3s ease-in-out infinite;}
+.cta-button{background:linear-gradient(135deg,#fff200,#ffc400);color:black;padding:22px 60px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:20px;letter-spacing:2px;transform:skewX(-10deg);border:none;cursor:pointer;box-shadow:0 0 40px rgba(255,196,0,0.4),0 8px 30px rgba(0,0,0,0.4);position:relative;overflow:hidden;transition:transform .15s, box-shadow .15s;}
+.cta-button:hover{transform:skewX(-10deg) scale(1.04);box-shadow:0 0 60px rgba(255,196,0,0.6),0 8px 30px rgba(0,0,0,0.4);}
+
+.stats-section{background:linear-gradient(180deg,var(--purple-mid),var(--purple-deep));padding:70px 20px;}
+.stats-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;margin-bottom:10px;}
+.stats-line{width:80px;height:4px;background:linear-gradient(90deg,var(--gold),transparent);margin:10px auto 30px;}
+.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin-bottom:50px;}
+.stat-box{background:linear-gradient(135deg,rgba(59,110,220,0.3),rgba(59,110,220,0.1));border:1px solid rgba(59,110,220,0.4);padding:18px 28px;border-radius:8px;text-align:center;min-width:155px;transition:transform .2s,border-color .2s;position:relative;overflow:hidden;}
+.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#3b6edc,transparent);}
+.stat-box:hover{transform:translateY(-3px);border-color:rgba(59,110,220,0.7);}
+.stat-box span{display:block;font-size:11px;letter-spacing:1px;opacity:.7;margin-bottom:4px;}
+.stat-box b{font-family:'Orbitron',sans-serif;font-size:17px;color:var(--gold);}
+.gen-top{text-align:center;color:var(--gold);font-family:'Orbitron',sans-serif;font-weight:700;margin-bottom:10px;font-size:11px;letter-spacing:2px;}
+.gen-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;margin-bottom:40px;}
+.gen-content{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;max-width:1100px;margin:auto;}
+.gen-content img{width:220px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.5);}
+.gen-text{flex:1;line-height:1.7;font-size:15px;color:rgba(255,255,255,0.85);}
+.gen-note{margin-top:25px;padding:15px;background:rgba(255,196,0,0.07);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:13px;color:rgba(255,255,255,0.7);}
+
+.faq{padding:80px 60px;background:var(--navy);}
+.faq h1{font-family:'Orbitron',sans-serif;font-size:50px;font-weight:900;text-align:center;margin-bottom:50px;background:linear-gradient(135deg,white,rgba(255,255,255,0.6));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.faq h2{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;margin-top:30px;letter-spacing:.5px;color:var(--gold-bright);}
+.faq p{color:rgba(255,255,255,0.6);line-height:1.7;font-size:15px;}
+.line{margin:25px 0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
+
+/* ===== PANEL NOTICIAS ===== */
+#panel{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#eee;z-index:9999;overflow-y:auto;}
+.panel-close{position:sticky;top:0;background:#000;color:#fff;border:none;padding:14px 24px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:bold;width:100%;text-align:right;z-index:10;letter-spacing:1px;}
+.panel-close:hover{background:#222;}
+.p-container{max-width:900px;margin:auto;display:flex;gap:30px;padding:20px;flex-wrap:wrap;}
+.p-main{flex:2;min-width:260px;background:white;padding:20px;color:#111;}
+.p-tag{background:orange;color:white;padding:5px 10px;display:inline-block;font-size:12px;margin-bottom:10px;}
+.p-title{font-size:20px;font-weight:bold;text-align:center;margin-bottom:10px;line-height:1.4;}
+.p-date{color:gray;font-size:14px;margin-bottom:15px;}
+.p-main img{width:100%;border-radius:5px;}
+.p-sidebar{flex:1;min-width:200px;}
+.p-card{background:white;margin-bottom:20px;padding:10px;color:#111;}
+.p-card img{width:100%;border-radius:5px;}
+.p-card p{font-size:13px;margin-top:6px;}
+.p-social{text-align:center;margin-bottom:20px;font-size:20px;}
+.p-social span{margin:0 8px;}
+
+/* Secciones de texto dentro del panel */
+.p-section{max-width:900px;margin:0 auto 20px;background:#fff;padding:30px;color:#111;}
+.p-section h2{font-size:20px;margin-bottom:15px;text-align:center;font-weight:bold;color:#111;}
+.p-section p{margin-bottom:15px;line-height:1.6;font-size:15px;color:#333;}
+.p-section ul,.p-section ol{padding-left:22px;margin-bottom:20px;line-height:2.2;font-size:15px;color:#333;}
+.p-section ul li{list-style:disc;}
+.p-section ol li{list-style:decimal;}
+.p-section a{color:#0066cc;font-weight:bold;}
+.p-section strong{color:#111;}
+.p-section-divider{max-width:900px;margin:0 auto;height:3px;background:linear-gradient(90deg,orange,transparent);}
+
+.p-related{background:#fff;padding:40px 20px;text-align:center;margin-bottom:0;}
+.p-related h2{color:#e0b100;font-size:24px;margin-bottom:30px;}
+.p-cards-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;max-width:900px;margin:auto;}
+.p-rel-card{width:240px;text-align:left;cursor:pointer;}
+.p-rel-card img{width:100%;border-radius:8px;}
+.p-rel-card p{margin-top:8px;font-weight:bold;font-size:13px;color:#111;}
+
+/* ===== STORE OVERLAY ===== */
+#storeOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;overflow-y:auto;background:linear-gradient(135deg,#0a1628,#0f3a5f,#1c8bc7);color:white;font-family:'Rajdhani',sans-serif;text-align:center;}
+.store-header{display:flex;justify-content:space-between;align-items:center;padding:16px 30px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.1);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);}
+.store-header-title{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);}
+.store-close-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:8px 18px;cursor:pointer;border-radius:4px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;transition:background .2s;}
+.store-close-btn:hover{background:rgba(255,255,255,0.2);}
+.store-steps{display:flex;justify-content:center;align-items:center;gap:0;padding:20px 0 10px;}
+.store-step{display:flex;align-items:center;gap:8px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.3);transition:color .3s;}
+.store-step.active{color:var(--gold);}
+.store-step.done{color:rgba(255,255,255,0.6);}
+.step-num{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:11px;transition:border-color .3s,background .3s;}
+.store-step.active .step-num{border-color:var(--gold);background:rgba(255,196,0,0.2);color:var(--gold);}
+.store-step.done .step-num{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.1);}
+.step-divider{width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 5px;}
+.store-pantalla{display:none;padding-bottom:40px;}
+.store-activa{display:block;}
+.store-inner-title{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;margin:30px 0 8px;letter-spacing:2px;}
+.store-inner-sub{color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:30px;letter-spacing:1px;}
+.store-container{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;padding:0 20px 10px;}
+.store-card{width:180px;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;}
+.store-card:hover{transform:translateY(-4px);border-color:rgba(255,196,0,0.4);box-shadow:0 10px 30px rgba(0,0,0,0.4);}
+.store-card.selected{border-color:var(--gold);box-shadow:0 0 20px rgba(255,196,0,0.3),0 10px 30px rgba(0,0,0,0.4);transform:translateY(-4px);}
+.store-card img{width:100%;height:130px;object-fit:cover;}
+.store-card-body{padding:10px 8px 14px;}
+.store-card-diamonds{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold);}
+.store-card-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
+.store-btn{margin-top:30px;padding:14px 40px;border:none;border-radius:6px;background:linear-gradient(135deg,var(--gold),#ff8c00);cursor:pointer;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;color:#000;box-shadow:var(--glow);transition:transform .15s,box-shadow .15s;}
+.store-btn:hover{transform:scale(1.04);box-shadow:var(--glow-lg);}
+.store-opciones{display:flex;justify-content:center;gap:25px;margin-top:40px;flex-wrap:wrap;padding:0 20px;}
+.store-opcion{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);color:white;padding:30px 40px;border-radius:12px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;transition:border-color .2s,transform .2s,background .2s;}
+.store-opcion:hover{border-color:var(--gold);background:rgba(255,196,0,0.1);transform:translateY(-3px);}
+.store-opcion .plat-icon{font-size:36px;display:block;margin-bottom:10px;}
+
+@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+@keyframes storeFade{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
+@keyframes storeZoom{from{transform:scale(1);}to{transform:scale(1.04);}}
+
+@media(max-width:900px){
+  nav{padding:12px 20px;}
+  .menu{display:none;}
+  .hero{padding-left:25px;}
+  .hero h1{font-size:26px;}
+  .hero span{font-size:44px;}
+  .news{padding:50px 20px;}
+  .news-grid{grid-template-columns:1fr;}
+  .faq{padding:50px 20px;}
+  .faq h1{font-size:32px;}
+  .gen-content{flex-direction:column;}
+  .gen-content img{width:100%;}
+}
+</style>
+</head>
+<body>
+
+<nav id="mainNav">
+  <div class="left">
+    <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBt5gqoSRGhl1MzfykF2l6ziD-WIsw1qWyiQ&s">
+    <div class="menu">
+      <a href="#">INICIO</a>
+      <a href="#noticias">BLOG</a>
+      <a href="#estadisticas">ESTADÍSTICAS</a>
+      <a href="https://www.hugedomains.com/domain_profile.cfm?d=unfans.com">AFILIADOS</a>
+      <a href="#">MEDIA</a>
+    </div>
+  </div>
+  <button class="btn-top" onclick="abrirStore()">GENERAR DIAMANTES</button>
+</nav>
+
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="hero-badge">🔥 GENERADOR OFICIAL 2026</div>
+    <h1>GENERADOR FREE FIRE ONLINE</h1>
+    <span>DIAMANTES GRATIS</span>
+    <p class="hero-sub">Accede a miles de diamantes de forma rápida y segura</p>
+    <button class="hero-btn" onclick="abrirStore()">⚡ GENERAR AHORA</button>
+  </div>
+</section>
+
+<section class="news" id="noticias">
+  <div class="section-label">ÚLTIMAS ACTUALIZACIONES</div>
+  <h2>NOTICIAS DEL JUEGO</h2>
+  <div class="section-line"></div>
+  <div class="news-grid">
+    <div class="news-card" onclick="abrirPanel()">
+      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
+      <div class="news-card-body">
+        <div class="news-cat">CÓDIGOS</div>
+        <div class="news-title">Códigos Free Fire activos hoy — lista completa y actualizada</div>
+        <div class="meta">HOY · ACTUALIZADO</div>
+      </div>
+    </div>
+    <div class="news-card" onclick="abrirPanel()">
+      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
+      <div class="news-card-body">
+        <div class="news-cat">EVENTO</div>
+        <div class="news-title">Nuevo evento de temporada: recompensas exclusivas por tiempo limitado</div>
+        <div class="meta">HOY · ACTUALIZADO</div>
+      </div>
+    </div>
+    <div class="news-card" onclick="abrirPanel()">
+      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
+      <div class="news-card-body">
+        <div class="news-cat">SKINS</div>
+        <div class="news-title">Las mejores skins de Free Fire disponibles esta semana en la tienda</div>
+        <div class="meta">HOY · ACTUALIZADO</div>
+      </div>
+    </div>
+    <div class="news-card" onclick="abrirPanel()">
+      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
+      <div class="news-card-body">
+        <div class="news-cat">GUÍA</div>
+        <div class="news-title">Cómo conseguir diamantes gratis en 2026: guía completa paso a paso</div>
+        <div class="meta">HOY · ACTUALIZADO</div>
+      </div>
+    </div>
+    <div class="news-card" onclick="abrirPanel()">
+      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
+      <div class="news-card-body">
+        <div class="news-cat">PASE ELITE</div>
+        <div class="news-title">Pase Elite nueva temporada: todo lo que incluye y cómo obtenerlo gratis</div>
+        <div class="meta">HOY · ACTUALIZADO</div>
+      </div>
+    </div>
+    <div class="news-card" onclick="abrirPanel()">
+      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
+      <div class="news-card-body">
+        <div class="news-cat">TRUCOS</div>
+        <div class="news-title">Top 10 trucos de Free Fire que todo jugador debe conocer en 2026</div>
+        <div class="meta">HOY · ACTUALIZADO</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section" id="estadisticas">
+  <div class="stats-title">ESTADÍSTICAS DEL GENERADOR</div>
+  <div class="stats-line"></div>
+  <div class="stats">
+    <div class="stat-box"><span>ESTADO:</span><b style="color:#4ade80;">● ONLINE</b></div>
+    <div class="stat-box"><span>ÚLTIMA ACTUALIZACIÓN:</span><b id="statFecha">APR 23 2026</b></div>
+    <div class="stat-box"><span>USUARIOS EN LÍNEA:</span><b class="counter" data-target="12067">0</b></div>
+    <div class="stat-box"><span>DIAMANTES GENERADOS:</span><b class="counter" data-target="872516">0</b></div>
+    <div class="stat-box"><span>PASES DE ELITE:</span><b class="counter" data-target="825740">0</b></div>
+  </div>
+  <div class="gen-top">⚡ POR TIEMPO LIMITADO — GENERA DIAMANTES GRATIS EN FREE FIRE</div>
+  <div class="gen-title">GENERADOR DE DIAMANTES GRATIS EN GARENA FREE FIRE</div>
+  <div class="gen-content">
+    <img src="https://images.g2a.com/300x400/1x1x1/garena-free-fire-314-diamonds-garena-key-global-i10000218624022/5f6090f97e696c046b0ffe22">
+    <div class="gen-text">
+      Actualmente los diamantes son el recurso más valioso en Free Fire. Ya que con ellos puedes comprar un sinfín de artículos en la tienda como: el Pase de Batalla, adquirir skins, habilidades adicionales y más. La única desventaja que tienen estos recursos es que son de pago, por ello hemos creado un generador capaz de recargar diamantes a cualquier cuenta de Free Fire.<br><br>
+      Con este generador puedes conseguir recargar diamantes en Free Fire completamente gratis, mismos que podrás utilizar para mejorar la apariencia de tu personaje. Comprar skins, pases de batalla, gestos, todo a través de tu cuenta con los diamantes que has generado.
+      <div class="gen-note"><b>💡 Nota:</b> Los diamantes generados pueden demorar de 24 a 48 horas en acreditarse en tu cuenta. Tu cuenta nunca se verá afectada ni comprometida. Por seguridad, nunca te pediremos que ingreses tu contraseña.</div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <h1>¡OBTÉN TUS<br>DIAMANTES GRATIS!</h1>
+    <img class="pack-img" src="https://st1.techlusive.in/wp-content/uploads/2025/09/untitled-2025-09-21T105937.573.jpg?impolicy=Medium_Widthonly&w=400">
+    <button class="cta-button" onclick="abrirStore()">⚡ CONSIGUE DIAMANTES GRATIS</button>
+  </div>
+</section>
+
+<section class="faq">
+  <h1>PREGUNTAS FRECUENTES</h1>
+  <h2>¿Cómo puedo generar diamantes gratis para Free Fire?</h2>
+  <p>Para generar diamantes gratis en Free Fire, primero debes seleccionar el pack de diamantes que deseas obtener. Luego, eliges la cantidad disponible dentro del sistema, seleccionas tu plataforma (Android, iOS o PC) y colocas tu nombre o ID de usuario correctamente.</p>
+  <div class="line"></div>
+  <h2>¿Para qué sirven los diamantes en Free Fire?</h2>
+  <p>Los diamantes sirven principalmente para adquirir múltiples objetos dentro del juego como skins, personajes, mascotas, cajas especiales y el Pase Elite. Gracias a ellos puedes mejorar tu experiencia dentro del juego, acceder a contenido exclusivo y personalizar completamente tu cuenta.</p>
+  <div class="line"></div>
+  <h2>¿Generador De Diamantes Free Fire Por ID?</h2>
+  <p>Sí, este sistema funciona mediante ID. Solo necesitas ingresar tu nombre o ID de jugador para poder recibir los diamantes directamente en tu cuenta.</p>
+  <div class="line"></div>
+  <h2>¿Cómo se utilizan los diamantes en Free Fire?</h2>
+  <p>Para utilizar las gemas es necesario que primero realices una recarga de diamantes, ya sea a través de la tienda del juego o una plataforma externa. Luego buscas un objeto en la tienda y seleccionas la opción de Comprar.</p>
+  <div class="line"></div>
+  <h2>¿Cómo comprar diamantes en free fire?</h2>
+  <p>Para comprar gemas es necesario que ingreses al menú principal de Free Fire y selecciones el icono de un diamante, que se encuentra ubicado en la parte superior izquierda de la pantalla. Posteriormente, eliges una de las ofertas disponibles y confirmas la compra. Otra alternativa es adquirirlos a través de Pagostore, plataforma de Garena que ofrece múltiples métodos de pago.</p>
+  <div class="line"></div>
+  <h2>GENERADOR FREE FIRE</h2>
+  <p>El Generador de Diamantes Free Fire es totalmente gratuito y puedes utilizarlo para generar diamantes gratis en Free Fire. Tiene un límite diario de 10.000 diamantes por persona, está disponible para los usuarios de: PC, Mac y móviles. Free Fire es un juego de batalla real desarrollado por 111 Dots Studio y publicado por Garena en 2017, convirtiéndose en uno de los juegos más populares de su tipo con millones de jugadores en todo el mundo.</p>
+</section>
+
+<!-- ===== PANEL NOTICIAS ===== -->
+<div id="panel">
+  <button class="panel-close" onclick="cerrarPanel()">✕ CERRAR</button>
+
+  <div class="p-container">
+    <div class="p-main">
+      <div class="p-tag">CODIGOS</div>
+      <div class="p-title">FREE FIRE CÓDIGOS HOY, 2026. AQUÍ TIENES LA LISTA DE CÓDIGOS DE GARENA FREE FIRE QUE PUEDES CANJEAR</div>
+      <div class="p-date">PARA HOY 2026</div>
+      <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
+    </div>
+    <div class="p-sidebar">
+      <div class="p-social"><span>🔵</span><span>🐦</span><span>▶️</span><span>🎮</span><span>📷</span></div>
+      <div class="p-card">
+        <img src="https://media.tycsports.com/files/2022/03/11/400802/diamantes-free-fire_1440x810_wmk.jpg">
+        <p>RECARGA EN FREE FIRE: OBTÉN EL SARTÉN DE PORCELANA DEL DRAGÓN AL COMPRAR DIAMANTES</p>
+      </div>
+      <div class="p-card">
+        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
+        <p>FREE FIRE CÓDIGOS HOY, LISTA DE CÓDIGOS QUE PUEDES CANJEAR</p>
+      </div>
+      <div class="p-card">
+        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
+        <p>FREE FIRE CÓDIGOS ACTUALIZADOS Y RECOMPENSAS GRATIS</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="p-section">
+    <h2>Códigos Free Fire para hoy 2026</h2>
+    <p>Aquí tienes la lista de códigos de Garena Free Fire que puedes canjear hoy viernes 6 de febrero del 2026. La disponibilidad puede variar según la región. Algunos códigos pueden no funcionar en ciertos casos.</p>
+    <ul>
+      <li>FQ9W2E1R7T5Y3U6I</li>
+      <li>FK3J9H5G1F7D2S4A</li>
+      <li>FM6N1B8V3C4X7Z9L</li>
+      <li>FL2K6J4H8G5F3D7S</li>
+      <li>Q8M4K7L2V9R9J</li>
+      <li>A6QK1L9MRP5V</li>
+      <li>Z4QP8M6KNR2J</li>
+      <li>P7QH5K3LVJ9P</li>
+      <li>M2QP9L8KRV6K</li>
+      <li>R5QK4M7LVP1R</li>
+      <li>K9QP6K2MNL8V</li>
+      <li>V3QJ1M9KRP7V</li>
+      <li>D8MJ4Q6LVK2R</li>
+      <li>N7QK5L3MRP9J</li>
+      <li>J2QP8M1KVL6V</li>
+      <li>E9QH6K4LNP7V</li>
+      <li>S5PL7M2LRV8K</li>
+      <li>Y1QP9K6MVJ4R</li>
+      <li>O4QK2L8MRP7R</li>
+    </ul>
+    <p>Canjear Códigos Free Fire aquí: <a href="https://reward.ff.garena.com/" target="_blank">reward.ff.garena.com</a></p>
+  </div>
+
+  <div class="p-section-divider"></div>
+
+  <div class="p-section">
+    <h2>¿CÓMO CANJEAR CÓDIGOS DE FREE FIRE?</h2>
+    <p>Y aquí tienes una guía paso a paso para redimir los códigos en Free Fire:</p>
+    <ol>
+      <li><strong>Abre Free Fire en tu dispositivo:</strong> Inicia el juego desde tu teléfono móvil o tableta.</li>
+      <li><strong>Accede a la sección de códigos:</strong> En la pantalla principal, toca el icono de perfil que generalmente se encuentra en la esquina superior izquierda. Luego, selecciona el botón de "Recompensas" o "Canjear códigos", que suele estar representado por un icono de regalo o una caja.</li>
+      <li><strong>Introduce el código:</strong> En el campo de texto que aparece, ingresa el código de recompensa que tienes. Asegúrate de escribirlo exactamente como lo has recibido, sin errores ni espacios adicionales.</li>
+      <li><strong>Confirma el canje:</strong> Después de ingresar el código, toca el botón de confirmación para validar el canje. Si el código es válido, recibirás una notificación con la recompensa.</li>
+      <li><strong>Revisa tus recompensas:</strong> Regresa al menú principal y revisa tu inventario o buzón de recompensas para ver los artículos que has recibido.</li>
+      <li><strong>Disfruta de tus premios:</strong> Utiliza las recompensas obtenidas en el juego según tus necesidades y preferencias.</li>
+      <li>Recuerda que la disponibilidad de los códigos puede variar y algunos pueden expirar rápidamente, así que ¡asegúrate de canjearlos lo antes posible!</li>
+    </ol>
+  </div>
+
+  <div class="p-section-divider"></div>
+
+  <div class="p-section">
+    <h2>PARA QUÉ REGIÓN SON VÁLIDOS LOS CÓDIGOS FF</h2>
+    <p>Actualmente los Códigos de Free Fire son válidos para esta lista de regiones que dejaré aquí abajo, recuerda que según que código puede variar y estar solo activo en una región u otra, pero siempre publicaremos una gran lista mixta para todas las regiones como Norte América, Sudamérica (LATAM: Latinoamérica y Centro América), Asia, Europa, África y Oceanía.</p>
+    <p>Esta es la lista de algunas recompensas que puedes conseguir gratis con los códigos de Free Fire:</p>
+    <p><strong>Diamantes, Ropas y Skins, Apariencias de Armas, Mascotas, Personajes</strong></p>
+    <h2>¿LOS CÓDIGOS DE FREE FIRE ANTIGUOS FUNCIONAN?</h2>
+    <p>Normalmente no, ya que son de eventos especiales temporales la mayoría, pero existen algunos que nunca expiran por lo cual siempre funcionan, son pocos y normalmente son muy exclusivos por lo cual los tienen un grupo reducido de personas y no son públicos la mayoría.</p>
+    <h2>QUE SON LOS CODIGOS DE FREE FIRE</h2>
+    <p>Los códigos Free Fire son una combinación de 12 números y letras en mayúscula que una vez la introduces en la página oficial habilitada para ellos, podrás canjearlos por increíbles premios.</p>
+    <p>Estos códigos pueden estar en tarjetas impresas o en regalos digitales.</p>
+    <p>Todos los códigos del juego tienen una vigencia, lo que quiere decir que se pueden vencer, intenta siempre canjearlos tan pronto los consigas.</p>
+  </div>
+
+  <div class="p-section-divider"></div>
+
+  <div class="p-section">
+    <h2>¿QUÉ PUEDO GANAR CON LOS CÓDIGOS?</h2>
+    <p>En el momento en que canjeas un código la plataforma de Garena escoge aleatoriamente un premio para ti, los premios pueden variar entre muchas cosas, aquí te cuento que podrías ganar al momento de canjear un código Free Fire.</p>
+    <p>Una mascota nueva; podrás tener un compañero de juego y ayuda en tus habilidades para hacer Booyah.</p>
+    <p>Prendas de vestir nuevas; porque siempre es importante lucir con lo último de la moda. Accesorios; ya sea desde un paracaídas único hasta máscaras increíbles, tu personaje podría jugar con los últimos equipamientos del juego.</p>
+    <p>Diamantes y oro; estos son de los mejores premios, pues con los diamantes y el oro podrás comprar y conseguir innumerables premios y lo mejor es que tú escoges exactamente lo que deseas.</p>
+    <h2>¿PARA QUÉ SIRVEN LOS CÓDIGOS FREE FIRE?</h2>
+    <p>Por lo general se utilizan con la finalidad de obtener algún premio en el juego, ya sean prendas de vestir, movimientos, diamantes, personajes, etc.</p>
+    <h2>¿DÓNDE CONSIGO ESTOS CÓDIGOS?</h2>
+    <p>Existen diferentes formas de conseguir estos códigos, pero ten cuidado no todas serán seguras y no siempre te servirán.</p>
+    <p>Casi siempre Garena regala códigos canjeables del juego en sus eventos, también lo suelen hacer en sus redes sociales oficiales, siempre con la condición de que cumplas algún objetivo puntual, estos códigos nunca tendrán ningún valor económico, son completamente gratis.</p>
+    <p>Existen muchas webs, youtubers, influencers, etc. donde suben los códigos de recompensa free fire, pero siempre debes asegurarte de que sean confiables y estén actualizados.</p>
+  </div>
+
+  <div class="p-section-divider"></div>
+
+  <div class="p-section">
+    <h2>¿DÓNDE ENCUENTRO LAS RECOMPENSAS QUE GANÉ?</h2>
+    <p>Las especificaciones de los premios que has canjeado las podrás encontrar:</p>
+    <p>Dirigiéndote al símbolo de correo recibido del juego que encontrarás en la esquina superior derecha y allí podrás reclamar todo lo que ganaste.</p>
+    <p>En 'tu colección' encontrarás los objetos físicos que ganaste como trajes, mascotas, accesorios etc.; por otro lado, los premios de oro o diamantes se habrán añadido directamente a tu cuenta.</p>
+    <h2>CUÁNTO TIEMPO SE TARDAN EN DARME LOS PREMIOS DE LOS CODIGOS</h2>
+    <p>Una vez canjeas los códigos de Free Fire y obtienes tus premios, estarán en el juego en un tiempo máximo de 30 minutos.</p>
+    <p>Recuerda que Garena no tiene una hora exacta para regalar los códigos, por lo tanto, debes estar atento a sus redes sociales oficiales o a la web que te nombramos hace un momento.</p>
+    <h2>¿TODOS LOS CODIGOS SIRVEN?</h2>
+    <p>Los códigos Free Fire tienen un vencimiento ya sea de años, meses, días o incluso horas, una vez este código se vence ya no se puede canjear por ningún premio.</p>
+    <p>Muchas veces estos códigos puede que no te funcionen pues algunos dependen del país donde los intentes canjear.</p>
+    <p>En caso de que tengas dificultades con las plataformas, los códigos o tu cuenta deberás dirigirte al soporte de la compañía para dar solución a tu problema.</p>
+  </div>
+
+  <div class="p-related">
+    <h2>TE PODRÍA INTERESAR</h2>
+    <div class="p-cards-row">
+      <div class="p-rel-card" onclick="abrirPanel()">
+        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
+        <p>FREE FIRE CÓDIGOS HOY 2026 🔥 LISTA ACTUALIZADA PARA CANJEAR RECOMPENSAS GRATIS</p>
+      </div>
+      <div class="p-rel-card" onclick="abrirPanel()">
+        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
+        <p>NUEVOS CÓDIGOS FREE FIRE HOY 2026 🎁 CONSIGUE DIAMANTES Y SKINS GRATIS</p>
+      </div>
+      <div class="p-rel-card" onclick="abrirPanel()">
+        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
+        <p>CÓDIGOS GRATIS FREE FIRE HOY 2026 🚀 CANJEA RECOMPENSAS EXCLUSIVAS</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== STORE OVERLAY ===== -->
+<div id="storeOverlay">
+  <div class="store-header">
+    <div class="store-header-title">💎 FREE FIRE STORE</div>
+    <button class="store-close-btn" onclick="cerrarStore()">✕ CERRAR</button>
+  </div>
+  <div class="store-steps" id="storeSteps">
+    <div class="store-step active" id="step1"><div class="step-num">1</div>DIAMANTES</div>
+    <div class="step-divider"></div>
+    <div class="store-step" id="step2"><div class="step-num">2</div>PLATAFORMA</div>
+    <div class="step-divider"></div>
+    <div class="store-step" id="step3"><div class="step-num">3</div>USUARIO</div>
+  </div>
+  <div id="storePantalla1" class="store-pantalla store-activa">
+    <div class="store-inner-title">ELIGE TU PACK</div>
+    <div class="store-inner-sub">Selecciona la cantidad de diamantes que deseas generar</div>
+    <div class="store-container">
+      <div class="store-card" onclick="storeSeleccionar(this,520)">
+        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
+        <div class="store-card-body"><div class="store-card-diamonds">💎 520</div><div class="store-card-label">diamantes</div></div>
+      </div>
+      <div class="store-card" onclick="storeSeleccionar(this,1060)">
+        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
+        <div class="store-card-body"><div class="store-card-diamonds">💎 1,060</div><div class="store-card-label">diamantes</div></div>
+      </div>
+      <div class="store-card" onclick="storeSeleccionar(this,2180)">
+        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
+        <div class="store-card-body"><div class="store-card-diamonds">💎 2,180</div><div class="store-card-label">diamantes</div></div>
+      </div>
+      <div class="store-card" onclick="storeSeleccionar(this,5600)">
+        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
+        <div class="store-card-body"><div class="store-card-diamonds">💎 5,600</div><div class="store-card-label">diamantes</div></div>
+      </div>
+    </div>
+    <button class="store-btn" onclick="storeGenerar()">CONTINUAR →</button>
+    <p id="storeMensaje" style="margin-top:15px;color:#ff6b6b;font-size:14px;"></p>
+  </div>
+  <div id="storePantalla2" class="store-pantalla">
+    <div class="store-inner-title">¿DÓNDE JUEGAS?</div>
+    <div class="store-inner-sub">Selecciona tu plataforma de juego</div>
+    <div class="store-opciones">
+      <div class="store-opcion" onclick="storeFinalizar()"><span class="plat-icon">💻</span>PC / MAC</div>
+      <div class="store-opcion" onclick="storeFinalizar()"><span class="plat-icon">📱</span>MÓVIL</div>
+    </div>
+  </div>
+  <div id="storePantalla3"></div>
+</div>
+
+<script>
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
+});
+
+function animateCounter(el){
+  const target = parseInt(el.dataset.target);
+  const duration = 2000;
+  const step = target / (duration / 16);
+  let current = 0;
+  const timer = setInterval(()=>{
+    current += step;
+    if(current >= target){current = target;clearInterval(timer);}
+    el.textContent = Math.floor(current).toLocaleString('es-ES');
+  }, 16);
+}
+const counterObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);counterObserver.unobserve(e.target);}});
+},{threshold:0.3});
+document.querySelectorAll('.counter').forEach(el=>counterObserver.observe(el));
+
+function abrirPanel(){
+  var p = document.getElementById("panel");
+  p.style.display = "block";
+  p.scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+function cerrarPanel(){
+  document.getElementById("panel").style.display = "none";
+  document.body.style.overflow = "";
+}
+
+function setStep(n){
+  for(let i=1;i<=3;i++){
+    const el = document.getElementById('step'+i);
+    el.classList.remove('active','done');
+    if(i < n) el.classList.add('done');
+    if(i === n) el.classList.add('active');
+  }
+}
+
+let storeSeleccion = 0;
+function abrirStore(){
+  storeSeleccion = 0;
+  document.querySelectorAll(".store-card").forEach(c=>c.classList.remove("selected"));
+  document.getElementById("storeMensaje").innerHTML = "";
+  document.getElementById("storePantalla1").className = "store-pantalla store-activa";
+  document.getElementById("storePantalla2").className = "store-pantalla";
+  document.getElementById("storePantalla3").style.display = "none";
+  setStep(1);
+  document.getElementById("storeOverlay").style.display = "block";
+  document.getElementById("storeOverlay").scrollTop = 0;
+  document.body.style.overflow = "hidden";
+}
+function cerrarStore(){
+  document.getElementById("storeOverlay").style.display = "none";
+  document.body.style.overflow = "";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function storeSeleccionar(el, cant){
+  document.querySelectorAll(".store-card").forEach(c=>c.classList.remove("selected"));
+  el.classList.add("selected");
+  storeSeleccion = cant;
+  document.getElementById("storeMensaje").innerHTML = "";
+}
+function storeGenerar(){
+  if(storeSeleccion === 0){document.getElementById("storeMensaje").innerHTML = "⚠️ Selecciona un pack de diamantes";return;}
+  document.getElementById("storeMensaje").innerHTML = "⏳ Procesando...";
+  setTimeout(()=>{
+    document.getElementById("storePantalla1").className = "store-pantalla";
+    document.getElementById("storePantalla2").className = "store-pantalla store-activa";
+    setStep(2);
+  }, 800);
+}
+function storeFinalizar(){
+  document.getElementById("storePantalla2").className = "store-pantalla";
+  document.getElementById("storePantalla3").innerHTML = buildPantalla3();
+  document.getElementById("storePantalla3").style.display = "block";
+  setStep(3);
+}
+function buildPantalla3(){
+  return `<div id="storePantalla3Inner" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,22,40,0.97),rgba(15,58,95,0.97));display:flex;flex-direction:column;justify-content:center;align-items:center;">
+    <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;letter-spacing:2px;margin-bottom:6px;">INGRESA TU ID</div>
+    <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:20px;letter-spacing:1px;">Tu ID de usuario de Free Fire</div>
+    <input id="storeUserID" placeholder="Ej: 123456789" style="padding:14px 20px;width:280px;border:none;border-bottom:2px solid rgba(255,196,0,0.5);background:rgba(255,255,255,0.05);color:white;text-align:center;font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;border-radius:4px 4px 0 0;outline:none;">
+    <img src="https://www.gamersoft.net/wp-content/uploads/2023/04/garena-free-fire.webp" style="width:280px;margin-top:25px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.5);">
+    <button class="store-btn" style="margin-top:25px;" onclick="storeRecargar()">⚡ ¡RECARGAR AHORA!</button>
+    <p id="storeFinalMsg" style="margin-top:10px;color:#ffeb3b;font-size:14px;"></p>
+  </div>`;
+}
+function storeRecargar(){
+  let id = document.getElementById("storeUserID").value.trim();
+  if(!id){document.getElementById("storeFinalMsg").innerHTML = "⚠️ Ingresa tu ID de usuario";return;}
+  document.getElementById("storePantalla3").innerHTML = `<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,22,40,0.97),rgba(15,58,95,0.97));display:flex;justify-content:center;align-items:center;">
+    <div style="background:rgba(15,23,42,0.95);padding:35px;border-radius:16px;width:340px;text-align:center;border:1px solid rgba(255,255,255,0.1);">
+      <div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;margin-bottom:20px;">🔄 PROCESANDO</div>
+      <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg?__scale=w:1200,h:900,t:2" style="width:100%;border-radius:10px;margin-bottom:20px;">
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:5px;">ID: <b style="color:white;">${id}</b></div>
+      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:20px;">Pack: <b style="color:#ffc400;">${storeSeleccion.toLocaleString('es-ES')} 💎</b></div>
+      <div style="height:8px;background:rgba(255,255,255,0.08);border-radius:8px;overflow:hidden;margin-bottom:12px;">
+        <div id="storeBarra" style="height:100%;width:0%;background:linear-gradient(90deg,#00d4ff,#00ff88);border-radius:8px;transition:width .3s;"></div>
+      </div>
+      <p id="storeEstado" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.5);">Conectando al servidor...</p>
+    </div>
+  </div>`;
+  let progreso = 0;
+  const msgs = ['','','Verificando usuario...','','','Enviando diamantes...','','','Finalizando...','',''];
+  let intervalo = setInterval(()=>{
+    progreso += 10;
+    var barra = document.getElementById("storeBarra");
+    var estado = document.getElementById("storeEstado");
+    if(barra) barra.style.width = progreso + "%";
+    if(msgs[progreso/10] && estado) estado.innerHTML = msgs[progreso/10];
+    if(progreso >= 100){
+      clearInterval(intervalo);
+      setTimeout(()=>{
+        document.getElementById("storePantalla3").innerHTML = `<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,22,40,0.97),rgba(15,58,95,0.97));display:flex;justify-content:center;align-items:center;">
+          <div style="background:rgba(15,23,42,0.95);padding:35px;border-radius:16px;width:340px;text-align:center;border:1px solid rgba(0,255,136,0.3);box-shadow:0 0 40px rgba(0,255,136,0.15);">
+            <div style="font-size:40px;margin-bottom:10px;">✅</div>
+            <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#4ade80;letter-spacing:2px;margin-bottom:20px;">¡RECARGA LISTA!</div>
+            <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg?__scale=w:1200,h:900,t:2" style="width:100%;border-radius:10px;margin-bottom:20px;">
+            <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:5px;">ID: <b style="color:white;">${id}</b></div>
+            <div style="font-size:18px;font-family:'Orbitron',sans-serif;color:#ffc400;margin:10px 0 20px;font-weight:700;">${storeSeleccion.toLocaleString('es-ES')} DIAMANTES 💎</div>
+            <button onclick="cerrarStore()" style="background:linear-gradient(135deg,#ffc400,#ff8c00);color:black;padding:12px 28px;border:none;border-radius:6px;font-family:'Orbitron',sans-serif;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:1px;">VOLVER AL INICIO</button>
+          </div>
+        </div>`;
+      }, 400);
+    }
+  }, 300);
+}
+</script>
+</body>
+</html>
