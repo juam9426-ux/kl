@@ -1,647 +1,822 @@
+Write fully new dynamic single-page app HTML with screen transitions, typewriter reveal, interactive letters, world globe and final party
+bash
+
+cat > /mnt/user-data/outputs/amor-hellokitty.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Fire Generator</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
-<!-- Google AdSense -->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7439406925260802"
-     crossorigin="anonymous"></script>
+<title>Para Ti</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
 <style>
-:root{
-  --gold:#ffc400;
-  --gold-bright:#ffe066;
-  --purple-dark:#0d0820;
-  --purple-mid:#1a1035;
-  --purple-deep:#2a1240;
-  --blue-store:#0f5f8f;
-  --navy:#020c1c;
-  --accent:#ff4444;
-  --glow: 0 0 20px rgba(255,196,0,0.4);
-  --glow-lg: 0 0 40px rgba(255,196,0,0.3);
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:#0d0520;
+  color:#fff8fc;
+  cursor:none;
 }
-html{scroll-behavior:smooth;}
-*{box-sizing:border-box;}
-body{margin:0;font-family:'Rajdhani',Arial,sans-serif;background:var(--purple-dark);color:white;overflow-x:hidden;}
 
-nav{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:15px 50px;
-  background:rgba(0,0,0,0.85);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  position:sticky;top:0;z-index:1000;
-  border-bottom:1px solid rgba(255,196,0,0.15);
-  transition:background .3s, box-shadow .3s;
+/* CURSOR */
+#cursor{
+  position:fixed;width:14px;height:14px;border-radius:50%;
+  background:radial-gradient(circle,#f9a8d4,#db2777);
+  pointer-events:none;z-index:99999;
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 10px #f472b6;
+  transition:transform .06s;
 }
-nav.scrolled{background:rgba(0,0,0,0.95);box-shadow:0 4px 30px rgba(0,0,0,0.5);}
-.left{display:flex;align-items:center;gap:20px;}
-.logo{width:45px;filter:drop-shadow(0 0 8px rgba(255,196,0,0.5));}
-.menu a{color:rgba(255,255,255,0.8);margin:0 10px;text-decoration:none;font-family:'Rajdhani',sans-serif;font-weight:600;font-size:14px;letter-spacing:1px;transition:color .2s;position:relative;}
-.menu a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--gold);transition:width .2s;}
-.menu a:hover{color:var(--gold);}
-.menu a:hover::after{width:100%;}
-.btn-top{background:linear-gradient(135deg,var(--gold),#ff8c00);padding:10px 22px;border:none;font-family:'Orbitron',sans-serif;font-weight:700;font-size:12px;letter-spacing:1px;cursor:pointer;color:#000;clip-path:polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);transition:transform .15s, box-shadow .15s;box-shadow:var(--glow);}
-.btn-top:hover{transform:scale(1.05);box-shadow:var(--glow-lg);}
 
-.hero{min-height:100vh;padding:80px 20px;background:url("https://dl.dir.freefiremobile.com/common/web_event/official2.ff.garena.all/20255/792f0508b08f3f324bd37eefcd07e2ed.jpg") center/cover;display:flex;align-items:center;justify-content:flex-start;padding-left:80px;position:relative;}
-.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(13,8,32,0.9) 0%,rgba(13,8,32,0.5) 60%,transparent 100%);}
-.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%, rgba(255,196,0,0.08) 0%, transparent 60%);}
-.hero-content{position:relative;z-index:1;}
-.hero-badge{display:inline-block;background:rgba(255,196,0,0.15);border:1px solid rgba(255,196,0,0.4);padding:6px 16px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:var(--gold);margin-bottom:20px;animation:fadeInDown .6s ease forwards;}
-.hero h1{font-family:'Orbitron',sans-serif;font-size:42px;font-weight:700;margin:0;line-height:1.1;text-shadow:0 2px 20px rgba(0,0,0,0.8);animation:fadeInLeft .7s .1s ease both;}
-.hero span{font-family:'Orbitron',sans-serif;font-size:68px;font-weight:900;display:block;background:linear-gradient(135deg,var(--gold),#ff8c00);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;animation:fadeInLeft .7s .2s ease both;line-height:1;}
-.hero-sub{color:rgba(255,255,255,0.7);font-size:16px;margin:15px 0 30px;font-weight:500;letter-spacing:1px;animation:fadeInLeft .7s .3s ease both;}
-.hero-btn{display:inline-block;background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 38px;border:none;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;cursor:pointer;color:#000;clip-path:polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);position:relative;overflow:hidden;box-shadow:var(--glow-lg), 0 8px 32px rgba(0,0,0,0.4);animation:fadeInLeft .7s .4s ease both;transition:transform .15s,box-shadow .15s;}
-.hero-btn::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(255,255,255,0.25),transparent);transform:translateX(-100%);transition:transform .4s;}
-.hero-btn:hover::after{transform:translateX(100%);}
-.hero-btn:hover{transform:scale(1.04);box-shadow:0 0 50px rgba(255,196,0,0.5),0 8px 32px rgba(0,0,0,0.4);}
+/* PARTICLES */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:1;overflow:hidden;}
+.part{position:absolute;opacity:0;animation:partFloat linear infinite;pointer-events:none;}
+@keyframes partFloat{
+  0%  {transform:translateY(110vh);opacity:0;}
+  10% {opacity:.5;}
+  90% {opacity:.3;}
+  100%{transform:translateY(-8vh);opacity:0;}
+}
 
-.news{padding:80px 60px;background:linear-gradient(#0d0820,var(--purple-mid));text-align:center;}
-.section-label{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:4px;color:var(--gold);margin-bottom:10px;}
-.news h2{font-family:'Orbitron',sans-serif;font-size:28px;font-weight:700;margin-bottom:10px;}
-.section-line{width:60px;height:3px;background:linear-gradient(90deg,var(--gold),transparent);margin:0 auto 40px;}
-.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px;}
-.news-card{text-align:left;cursor:pointer;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:8px;overflow:hidden;transition:transform .25s,border-color .25s,box-shadow .25s;}
-.news-card:hover{transform:translateY(-5px);border-color:rgba(255,196,0,0.35);box-shadow:0 12px 40px rgba(0,0,0,0.5),0 0 20px rgba(255,196,0,0.1);}
-.news-card img{width:100%;height:160px;object-fit:cover;transition:transform .4s;}
-.news-card:hover img{transform:scale(1.05);}
-.news-card-body{padding:12px 14px 16px;}
-.news-cat{font-family:'Orbitron',sans-serif;font-size:9px;letter-spacing:2px;color:var(--gold);margin-bottom:6px;}
-.news-title{font-size:13px;font-weight:600;line-height:1.5;color:rgba(255,255,255,0.9);}
-.meta{font-size:11px;color:rgba(255,255,255,0.4);margin-top:8px;}
+/* ═══════════════════════════════
+   SCREEN SYSTEM — only one .screen visible at a time
+═══════════════════════════════ */
+.screen{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:30px 24px;
+  opacity:0;pointer-events:none;
+  transition:opacity .6s ease,transform .6s ease;
+  transform:scale(.97);
+  overflow:hidden;
+}
+.screen.active{opacity:1;pointer-events:all;transform:scale(1);}
+.screen.exit-left {opacity:0;transform:translateX(-60px) scale(.96);}
+.screen.exit-right{opacity:0;transform:translateX(60px) scale(.96);}
 
-.cta{position:relative;min-height:100vh;padding:80px 20px;background:url("https://media.vandal.net/master/2-2021/202121113175767_1.jpg") center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;}
-.cta-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(42,10,80,0.9),rgba(0,0,0,0.75));}
-.cta-content{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:15px;}
-.cta h1{font-family:'Orbitron',sans-serif;font-size:52px;font-weight:900;color:var(--gold);line-height:1.1;text-shadow:0 0 40px rgba(255,196,0,0.4);}
-.pack-img{width:220px;margin:10px auto;filter:drop-shadow(0 10px 30px rgba(255,196,0,0.3));animation:float 3s ease-in-out infinite;}
-.cta-button{background:linear-gradient(135deg,#fff200,#ffc400);color:black;padding:22px 60px;font-family:'Orbitron',sans-serif;font-weight:700;font-size:20px;letter-spacing:2px;transform:skewX(-10deg);border:none;cursor:pointer;box-shadow:0 0 40px rgba(255,196,0,0.4),0 8px 30px rgba(0,0,0,0.4);position:relative;overflow:hidden;transition:transform .15s, box-shadow .15s;}
-.cta-button:hover{transform:skewX(-10deg) scale(1.04);box-shadow:0 0 60px rgba(255,196,0,0.6),0 8px 30px rgba(0,0,0,0.4);}
+/* BGs */
+.bg-1{background:radial-gradient(ellipse 80% 60% at 20% 30%,rgba(29,78,216,.4) 0%,transparent 70%),
+      radial-gradient(ellipse 60% 80% at 80% 70%,rgba(219,39,119,.35) 0%,transparent 70%),
+      linear-gradient(160deg,#0d0520,#110a2e,#1a0518);}
+.bg-2{background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(219,39,119,.18) 0%,transparent 70%),
+      linear-gradient(180deg,#0d0520,#12041c);}
+.bg-3{background:radial-gradient(ellipse 80% 50% at 80% 30%,rgba(29,78,216,.3) 0%,transparent 70%),
+      radial-gradient(ellipse 50% 60% at 20% 70%,rgba(219,39,119,.25) 0%,transparent 70%),
+      linear-gradient(160deg,#0d0520,#1a0518);}
+.bg-4{background:radial-gradient(ellipse 60% 60% at 30% 40%,rgba(219,39,119,.25) 0%,transparent 70%),
+      radial-gradient(ellipse 50% 50% at 70% 60%,rgba(29,78,216,.25) 0%,transparent 70%),
+      linear-gradient(160deg,#0d0520,#12041c);}
+.bg-5{background:radial-gradient(ellipse 70% 70% at 50% 30%,rgba(219,39,119,.3) 0%,transparent 70%),
+      linear-gradient(160deg,#0d0520,#12041c);}
 
-.stats-section{background:linear-gradient(180deg,var(--purple-mid),var(--purple-deep));padding:70px 20px;}
-.stats-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;margin-bottom:10px;}
-.stats-line{width:80px;height:4px;background:linear-gradient(90deg,var(--gold),transparent);margin:10px auto 30px;}
-.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;margin-bottom:50px;}
-.stat-box{background:linear-gradient(135deg,rgba(59,110,220,0.3),rgba(59,110,220,0.1));border:1px solid rgba(59,110,220,0.4);padding:18px 28px;border-radius:8px;text-align:center;min-width:155px;transition:transform .2s,border-color .2s;position:relative;overflow:hidden;}
-.stat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#3b6edc,transparent);}
-.stat-box:hover{transform:translateY(-3px);border-color:rgba(59,110,220,0.7);}
-.stat-box span{display:block;font-size:11px;letter-spacing:1px;opacity:.7;margin-bottom:4px;}
-.stat-box b{font-family:'Orbitron',sans-serif;font-size:17px;color:var(--gold);}
-.gen-top{text-align:center;color:var(--gold);font-family:'Orbitron',sans-serif;font-weight:700;margin-bottom:10px;font-size:11px;letter-spacing:2px;}
-.gen-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:28px;font-weight:900;margin-bottom:40px;}
-.gen-content{display:flex;gap:30px;align-items:flex-start;flex-wrap:wrap;max-width:1100px;margin:auto;}
-.gen-content img{width:220px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.5);}
-.gen-text{flex:1;line-height:1.7;font-size:15px;color:rgba(255,255,255,0.85);}
-.gen-note{margin-top:25px;padding:15px;background:rgba(255,196,0,0.07);border-left:3px solid var(--gold);border-radius:0 6px 6px 0;font-size:13px;color:rgba(255,255,255,0.7);}
+/* SHARED TYPOGRAPHY */
+.eyebrow{font-family:'Montserrat';font-size:.65rem;letter-spacing:5px;text-transform:uppercase;color:#f472b6;opacity:.65;margin-bottom:10px;}
+.big-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(2.4rem,6vw,4.8rem);
+  background:linear-gradient(135deg,#f9a8d4,#93c5fd,#f472b6);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 16px rgba(244,114,182,.4));
+  text-align:center;line-height:1.15;
+}
+.sub-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;line-height:1.85;color:rgba(255,255,255,.75);
+  text-align:center;max-width:500px;margin:0 auto;
+}
+.sub-title em{color:#f9a8d4;font-style:italic;}
+.sub-title strong{color:#93c5fd;font-weight:600;}
+.divider{width:50px;height:1px;background:linear-gradient(90deg,transparent,#f472b6,transparent);margin:20px auto;}
 
-.faq{padding:80px 60px;background:var(--navy);}
-.faq h1{font-family:'Orbitron',sans-serif;font-size:50px;font-weight:900;text-align:center;margin-bottom:50px;background:linear-gradient(135deg,white,rgba(255,255,255,0.6));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.faq h2{font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:700;margin-top:30px;letter-spacing:.5px;color:var(--gold-bright);}
-.faq p{color:rgba(255,255,255,0.6);line-height:1.7;font-size:15px;}
-.line{margin:25px 0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);}
+/* GLASS CARD */
+.gcard{
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(244,114,182,.2);
+  backdrop-filter:blur(16px);
+  border-radius:26px;
+  padding:44px 40px;
+  max-width:600px;width:100%;
+  box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 0 1px rgba(244,114,182,.07);
+  position:relative;z-index:5;
+}
 
-/* ===== PANEL NOTICIAS ===== */
-#panel{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#eee;z-index:9999;overflow-y:auto;}
-.panel-close{position:sticky;top:0;background:#000;color:#fff;border:none;padding:14px 24px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:13px;font-weight:bold;width:100%;text-align:right;z-index:10;letter-spacing:1px;}
-.panel-close:hover{background:#222;}
-.p-container{max-width:900px;margin:auto;display:flex;gap:30px;padding:20px;flex-wrap:wrap;}
-.p-main{flex:2;min-width:260px;background:white;padding:20px;color:#111;}
-.p-tag{background:orange;color:white;padding:5px 10px;display:inline-block;font-size:12px;margin-bottom:10px;}
-.p-title{font-size:20px;font-weight:bold;text-align:center;margin-bottom:10px;line-height:1.4;}
-.p-date{color:gray;font-size:14px;margin-bottom:15px;}
-.p-main img{width:100%;border-radius:5px;}
-.p-sidebar{flex:1;min-width:200px;}
-.p-card{background:white;margin-bottom:20px;padding:10px;color:#111;}
-.p-card img{width:100%;border-radius:5px;}
-.p-card p{font-size:13px;margin-top:6px;}
-.p-social{text-align:center;margin-bottom:20px;font-size:20px;}
-.p-social span{margin:0 8px;}
+/* BTN */
+.btn{
+  display:inline-block;
+  background:transparent;
+  border:1.5px solid #f472b6;
+  color:#f9a8d4;
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;letter-spacing:3px;
+  padding:12px 42px;border-radius:60px;
+  cursor:pointer;text-transform:uppercase;
+  transition:background .3s,color .3s,box-shadow .3s,transform .2s;
+  box-shadow:0 0 18px rgba(244,114,182,.15);
+}
+.btn:hover{
+  background:rgba(244,114,182,.12);
+  box-shadow:0 0 32px rgba(244,114,182,.45);
+  color:#fff;transform:scale(1.04);
+}
 
-/* Secciones de texto dentro del panel */
-.p-section{max-width:900px;margin:0 auto 20px;background:#fff;padding:30px;color:#111;}
-.p-section h2{font-size:20px;margin-bottom:15px;text-align:center;font-weight:bold;color:#111;}
-.p-section p{margin-bottom:15px;line-height:1.6;font-size:15px;color:#333;}
-.p-section ul,.p-section ol{padding-left:22px;margin-bottom:20px;line-height:2.2;font-size:15px;color:#333;}
-.p-section ul li{list-style:disc;}
-.p-section ol li{list-style:decimal;}
-.p-section a{color:#0066cc;font-weight:bold;}
-.p-section strong{color:#111;}
-.p-section-divider{max-width:900px;margin:0 auto;height:3px;background:linear-gradient(90deg,orange,transparent);}
+/* ═══════════════════════════════
+   SCREEN 0 — INTRO
+═══════════════════════════════ */
+#s0 .heart-big{
+  font-size:clamp(4rem,12vw,7rem);
+  animation:heartbeat 1.4s ease-in-out infinite;
+  display:block;margin-bottom:20px;
+  filter:drop-shadow(0 0 30px rgba(244,114,182,.7));
+}
+@keyframes heartbeat{
+  0%,100%{transform:scale(1);}
+  14%    {transform:scale(1.2);}
+  28%    {transform:scale(1);}
+  42%    {transform:scale(1.12);}
+  70%    {transform:scale(1);}
+}
+#s0 .intro-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1rem;letter-spacing:4px;color:#f9a8d4;opacity:.6;
+  text-transform:uppercase;margin:12px 0 34px;
+}
 
-.p-related{background:#fff;padding:40px 20px;text-align:center;margin-bottom:0;}
-.p-related h2{color:#e0b100;font-size:24px;margin-bottom:30px;}
-.p-cards-row{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;max-width:900px;margin:auto;}
-.p-rel-card{width:240px;text-align:left;cursor:pointer;}
-.p-rel-card img{width:100%;border-radius:8px;}
-.p-rel-card p{margin-top:8px;font-weight:bold;font-size:13px;color:#111;}
+/* ═══════════════════════════════
+   SCREEN 1 — MENSAJE PRINCIPAL (TYPEWRITER)
+═══════════════════════════════ */
+#s1 .gcard{max-width:620px;}
+#s1 .msg-line{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.12rem;line-height:1.9;color:rgba(255,255,255,.82);
+  overflow:hidden;
+  max-height:0;opacity:0;
+  transition:max-height .7s ease,opacity .6s ease;
+}
+#s1 .msg-line.revealed{max-height:80px;opacity:1;}
+#s1 .msg-line em{color:#f9a8d4;font-style:italic;}
+#s1 .msg-line strong{color:#93c5fd;font-weight:600;}
+#s1 .reveal-more-btn{
+  margin-top:20px;width:100%;
+  background:transparent;
+  border:1px solid rgba(244,114,182,.3);
+  border-radius:14px;padding:12px;
+  color:rgba(244,114,182,.6);
+  font-family:'Montserrat';font-size:.68rem;letter-spacing:3px;
+  text-transform:uppercase;cursor:pointer;
+  transition:background .3s,color .3s,border-color .3s;
+}
+#s1 .reveal-more-btn:hover{background:rgba(244,114,182,.08);color:#f9a8d4;border-color:rgba(244,114,182,.5);}
+#s1 .reveal-more-btn.done{display:none;}
 
-/* ===== STORE OVERLAY ===== */
-#storeOverlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:99999;overflow-y:auto;background:linear-gradient(135deg,#0a1628,#0f3a5f,#1c8bc7);color:white;font-family:'Rajdhani',sans-serif;text-align:center;}
-.store-header{display:flex;justify-content:space-between;align-items:center;padding:16px 30px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(255,255,255,0.1);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px);}
-.store-header-title{font-family:'Orbitron',sans-serif;font-size:14px;letter-spacing:2px;color:var(--gold);}
-.store-close-btn{background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;padding:8px 18px;cursor:pointer;border-radius:4px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;transition:background .2s;}
-.store-close-btn:hover{background:rgba(255,255,255,0.2);}
-.store-steps{display:flex;justify-content:center;align-items:center;gap:0;padding:20px 0 10px;}
-.store-step{display:flex;align-items:center;gap:8px;font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:1px;color:rgba(255,255,255,0.3);transition:color .3s;}
-.store-step.active{color:var(--gold);}
-.store-step.done{color:rgba(255,255,255,0.6);}
-.step-num{width:26px;height:26px;border-radius:50%;border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:11px;transition:border-color .3s,background .3s;}
-.store-step.active .step-num{border-color:var(--gold);background:rgba(255,196,0,0.2);color:var(--gold);}
-.store-step.done .step-num{border-color:rgba(255,255,255,0.4);background:rgba(255,255,255,0.1);}
-.step-divider{width:40px;height:1px;background:rgba(255,255,255,0.15);margin:0 5px;}
-.store-pantalla{display:none;padding-bottom:40px;}
-.store-activa{display:block;}
-.store-inner-title{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;margin:30px 0 8px;letter-spacing:2px;}
-.store-inner-sub{color:rgba(255,255,255,0.5);font-size:14px;margin-bottom:30px;letter-spacing:1px;}
-.store-container{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;padding:0 20px 10px;}
-.store-card{width:180px;background:rgba(255,255,255,0.05);border:2px solid rgba(255,255,255,0.1);border-radius:12px;overflow:hidden;cursor:pointer;transition:border-color .2s,transform .2s,box-shadow .2s;}
-.store-card:hover{transform:translateY(-4px);border-color:rgba(255,196,0,0.4);box-shadow:0 10px 30px rgba(0,0,0,0.4);}
-.store-card.selected{border-color:var(--gold);box-shadow:0 0 20px rgba(255,196,0,0.3),0 10px 30px rgba(0,0,0,0.4);transform:translateY(-4px);}
-.store-card img{width:100%;height:130px;object-fit:cover;}
-.store-card-body{padding:10px 8px 14px;}
-.store-card-diamonds{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;color:var(--gold);}
-.store-card-label{font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px;}
-.store-btn{margin-top:30px;padding:14px 40px;border:none;border-radius:6px;background:linear-gradient(135deg,var(--gold),#ff8c00);cursor:pointer;font-family:'Orbitron',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;color:#000;box-shadow:var(--glow);transition:transform .15s,box-shadow .15s;}
-.store-btn:hover{transform:scale(1.04);box-shadow:var(--glow-lg);}
-.store-opciones{display:flex;justify-content:center;gap:25px;margin-top:40px;flex-wrap:wrap;padding:0 20px;}
-.store-opcion{background:rgba(255,255,255,0.06);border:2px solid rgba(255,255,255,0.15);color:white;padding:30px 40px;border-radius:12px;cursor:pointer;font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;transition:border-color .2s,transform .2s,background .2s;}
-.store-opcion:hover{border-color:var(--gold);background:rgba(255,196,0,0.1);transform:translateY(-3px);}
-.store-opcion .plat-icon{font-size:36px;display:block;margin-bottom:10px;}
+/* ═══════════════════════════════
+   SCREEN 2 — CARTAS (envelope pick)
+═══════════════════════════════ */
+#s2 .envelopes-wrap{
+  display:flex;gap:22px;flex-wrap:wrap;justify-content:center;
+  max-width:700px;margin:0 auto;
+}
+#s2 .env{
+  width:150px;
+  animation:envDrift ease-in-out infinite;
+  cursor:pointer;
+  position:relative;
+}
+#s2 .env:nth-child(1){animation-duration:5s;animation-delay:0s;}
+#s2 .env:nth-child(2){animation-duration:6.2s;animation-delay:1.1s;}
+#s2 .env:nth-child(3){animation-duration:5.5s;animation-delay:.5s;}
+#s2 .env:nth-child(4){animation-duration:4.8s;animation-delay:1.8s;}
+@keyframes envDrift{
+  0%,100%{transform:translateY(0) rotate(-2deg);}
+  50%    {transform:translateY(-18px) rotate(2deg);}
+}
+#s2 .env.opened{animation:none;opacity:.4;pointer-events:none;filter:grayscale(.6);}
+#s2 .env-inner{
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(244,114,182,.28);
+  border-radius:18px;padding:28px 16px 22px;
+  text-align:center;
+  transition:background .3s,box-shadow .3s,transform .2s;
+  box-shadow:0 8px 28px rgba(0,0,0,.3);
+  backdrop-filter:blur(10px);
+  position:relative;overflow:hidden;
+}
+#s2 .env-inner::before{
+  content:'';position:absolute;top:0;left:-60%;width:40%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
+  animation:shimmer 3.5s linear infinite;
+}
+@keyframes shimmer{to{left:130%;}}
+#s2 .env:not(.opened) .env-inner:hover{
+  background:rgba(244,114,182,.1);
+  box-shadow:0 14px 44px rgba(219,39,119,.3);
+  transform:scale(1.06) translateY(-4px);
+}
+#s2 .env-icon{font-size:2.2rem;display:block;margin-bottom:8px;}
+#s2 .env-lbl{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.75rem;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(249,168,212,.5);margin-bottom:14px;
+}
+#s2 .env-btn{
+  font-family:'Montserrat';font-size:.65rem;letter-spacing:3px;text-transform:uppercase;
+  color:#f9a8d4;border:1px solid rgba(244,114,182,.35);
+  border-radius:30px;padding:6px 14px;background:transparent;cursor:pointer;
+  transition:background .3s;
+}
+#s2 .env-btn:hover{background:rgba(244,114,182,.15);}
 
-@keyframes fadeInDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
-@keyframes fadeInLeft{from{opacity:0;transform:translateX(-30px);}to{opacity:1;transform:translateX(0);}}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
-@keyframes storeFade{from{opacity:0;transform:scale(0.92);}to{opacity:1;transform:scale(1);}}
-@keyframes storeZoom{from{transform:scale(1);}to{transform:scale(1.04);}}
+/* Letter reveal panel */
+#s2 .letter-panel{
+  position:fixed;inset:0;z-index:600;
+  background:rgba(8,2,18,.9);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;visibility:hidden;
+  transition:opacity .4s,visibility .4s;
+}
+#s2 .letter-panel.open{opacity:1;visibility:visible;}
+#s2 .letter-card{
+  background:rgba(18,4,30,.95);
+  border:1px solid rgba(244,114,182,.28);
+  border-radius:26px;padding:48px 40px;
+  max-width:500px;width:100%;position:relative;
+  transform:scale(.88) translateY(18px);
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 60px rgba(219,39,119,.12);
+}
+#s2 .letter-panel.open .letter-card{transform:scale(1) translateY(0);}
+#s2 .lc-close{
+  position:absolute;top:14px;right:18px;font-size:1.1rem;
+  color:rgba(244,114,182,.4);background:none;border:none;cursor:pointer;
+  transition:color .2s;
+}
+#s2 .lc-close:hover{color:#f9a8d4;}
+#s2 .lc-icon{font-size:1.8rem;text-align:center;display:block;margin-bottom:12px;}
+#s2 .lc-title{
+  font-family:'Great Vibes',cursive;font-size:2rem;
+  color:#f9a8d4;text-align:center;margin-bottom:16px;
+}
+#s2 .lc-body{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;line-height:1.95;color:rgba(255,255,255,.8);text-align:center;
+}
+#s2 .lc-body em{color:#f9a8d4;font-style:italic;}
+#s2 .lc-body strong{color:#93c5fd;font-weight:600;}
+#s2 .progress-row{
+  display:flex;gap:8px;justify-content:center;margin-top:20px;
+}
+#s2 .prog-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(244,114,182,.2);border:1px solid rgba(244,114,182,.4);
+  transition:background .3s;
+}
+#s2 .prog-dot.done{background:#f472b6;}
 
-@media(max-width:900px){
-  nav{padding:12px 20px;}
-  .menu{display:none;}
-  .hero{padding-left:25px;}
-  .hero h1{font-size:26px;}
-  .hero span{font-size:44px;}
-  .news{padding:50px 20px;}
-  .news-grid{grid-template-columns:1fr;}
-  .faq{padding:50px 20px;}
-  .faq h1{font-size:32px;}
-  .gen-content{flex-direction:column;}
-  .gen-content img{width:100%;}
+/* ═══════════════════════════════
+   SCREEN 3 — MUNDO FLOTANTE
+═══════════════════════════════ */
+#s3{flex-direction:row;gap:40px;flex-wrap:wrap;}
+#s3 .world-wrap{position:relative;width:260px;height:260px;flex-shrink:0;}
+#s3 .sphere{
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#aad4f5,#1a5fa8 55%,#0d3a6b);
+  box-shadow:0 0 60px rgba(91,155,213,.5),inset -16px -16px 34px rgba(0,0,0,.3),inset 8px 8px 24px rgba(255,255,255,.25);
+  position:relative;overflow:hidden;
+  animation:spherePulse 8s ease-in-out infinite;
+}
+@keyframes spherePulse{
+  0%,100%{box-shadow:0 0 60px rgba(91,155,213,.5),inset -16px -16px 34px rgba(0,0,0,.3),inset 8px 8px 24px rgba(255,255,255,.25);}
+  50%    {box-shadow:0 0 90px rgba(244,114,182,.5),inset -16px -16px 34px rgba(0,0,0,.3),inset 8px 8px 24px rgba(255,255,255,.25);}
+}
+#s3 .continent{position:absolute;background:rgba(255,180,210,.35);border-radius:50%;filter:blur(2px);}
+#s3 .fmsg{
+  position:absolute;background:rgba(255,255,255,.88);
+  border-radius:20px;padding:6px 14px;
+  font-family:'Great Vibes',cursive;font-size:1.1rem;color:#db2777;
+  white-space:nowrap;pointer-events:none;
+  box-shadow:0 4px 14px rgba(219,39,119,.2);
+  animation:fmsgFloat ease-in-out infinite;
+}
+@keyframes fmsgFloat{
+  0%,100%{transform:translateY(0) rotate(-1.5deg);}
+  50%    {transform:translateY(-10px) rotate(1.5deg);}
+}
+#s3 .world-text{max-width:340px;}
+#s3 .world-text .gcard{padding:32px 28px;}
+
+/* ═══════════════════════════════
+   SCREEN 4 — FINAL
+═══════════════════════════════ */
+#s4{text-align:center;flex-direction:column;}
+#s4 .final-title{
+  font-family:'Great Vibes',cursive;
+  font-size:clamp(3rem,8vw,5.5rem);
+  background:linear-gradient(135deg,#f9a8d4 0%,#93c5fd 50%,#f9a8d4 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-size:200%;
+  animation:shimmerTxt 3.5s linear infinite;
+  filter:drop-shadow(0 0 25px rgba(244,114,182,.35));
+  margin-bottom:16px;
+}
+@keyframes shimmerTxt{0%{background-position:0%;}100%{background-position:200%;}}
+#s4 .final-hearts{
+  font-size:2.5rem;letter-spacing:10px;
+  animation:heartbeat 1.4s ease-in-out infinite;
+  display:block;margin:10px 0 20px;
+}
+#s4 .final-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.15rem;line-height:1.9;
+  color:rgba(255,255,255,.75);font-style:italic;
+  max-width:520px;margin:0 auto 8px;
+}
+#s4 .final-sign{
+  font-family:'Great Vibes',cursive;font-size:2rem;
+  color:#f9a8d4;margin-top:18px;
+  animation:signPulse 2s ease-in-out infinite;
+}
+@keyframes signPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+
+/* CONFETTI */
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:8000;}
+.conf{position:absolute;animation:confFall linear forwards;}
+@keyframes confFall{
+  0%  {transform:translateY(-40px) rotate(0);opacity:1;}
+  100%{transform:translateY(110vh) rotate(360deg);opacity:0;}
+}
+
+/* SCREEN COUNTER */
+#screen-counter{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  display:flex;gap:10px;z-index:500;
+}
+.sc-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:rgba(244,114,182,.25);border:1px solid rgba(244,114,182,.4);
+  cursor:pointer;transition:background .3s,transform .2s;
+}
+.sc-dot.on{background:#f472b6;transform:scale(1.35);box-shadow:0 0 8px rgba(244,114,182,.8);}
+
+/* NEXT hint */
+.next-hint{
+  position:fixed;bottom:52px;left:50%;transform:translateX(-50%);
+  font-family:'Montserrat';font-size:.6rem;letter-spacing:4px;text-transform:uppercase;
+  color:rgba(244,114,182,.35);animation:hintBob 2s ease-in-out infinite;
+  pointer-events:none;z-index:500;white-space:nowrap;
+}
+@keyframes hintBob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(5px);}}
+
+@media(max-width:580px){
+  .gcard{padding:28px 18px;}
+  #s3{flex-direction:column;align-items:center;gap:20px;}
+  #s3 .world-wrap{width:200px;height:200px;}
+  #s3 .sphere{width:200px;height:200px;}
 }
 </style>
 </head>
 <body>
 
-<nav id="mainNav">
-  <div class="left">
-    <img class="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBt5gqoSRGhl1MzfykF2l6ziD-WIsw1qWyiQ&s">
-    <div class="menu">
-      <a href="#">INICIO</a>
-      <a href="#noticias">BLOG</a>
-      <a href="#estadisticas">ESTADÍSTICAS</a>
-      <a href="https://www.hugedomains.com/domain_profile.cfm?d=unfans.com">AFILIADOS</a>
-      <a href="#">MEDIA</a>
+<div id="cursor"></div>
+<div id="confetti"></div>
+<div id="particles"></div>
+
+<!-- SCREEN COUNTER -->
+<div id="screen-counter">
+  <div class="sc-dot on"  onclick="goTo(0)"></div>
+  <div class="sc-dot"     onclick="goTo(1)"></div>
+  <div class="sc-dot"     onclick="goTo(2)"></div>
+  <div class="sc-dot"     onclick="goTo(3)"></div>
+  <div class="sc-dot"     onclick="goTo(4)"></div>
+</div>
+<div class="next-hint" id="nextHint">continúa</div>
+
+<!-- ═══ SCREEN 0 — INTRO ═══ -->
+<div class="screen bg-1 active" id="s0">
+  <div id="introbg" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;"></div>
+  <span class="heart-big">🤍</span>
+  <div class="big-title" style="margin-bottom:10px;">Para ti,<br>mi amor</div>
+  <p class="s0-sub" style="font-family:'Cormorant Garamond',serif;font-size:1rem;letter-spacing:4px;color:#f9a8d4;opacity:.6;text-transform:uppercase;margin:14px 0 32px;">Una carta desde el corazón</p>
+  <button class="btn" onclick="goTo(1)">Abrir 🤍</button>
+</div>
+
+<!-- ═══ SCREEN 1 — MENSAJE LÍNEA A LÍNEA ═══ -->
+<div class="screen bg-3" id="s1">
+  <div class="gcard" style="max-width:620px;">
+    <div class="eyebrow">🤍 para ti 🤍</div>
+    <div style="font-family:'Great Vibes',cursive;font-size:clamp(1.8rem,4vw,2.6rem);background:linear-gradient(135deg,#f9a8d4,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:18px;">Eres única, eres maravillosa.</div>
+    <div class="divider" style="margin:0 0 18px 0;"></div>
+
+    <div class="msg-line" id="ml0">Siempre serás mi favorita. De quien me enamoré aquel día que llegaste al salón.</div>
+    <div class="msg-line" id="ml1" style="margin-top:10px;">Lo que sentí fue <em>más que un amor a primera vista</em>. Quiero que seas la niña de mis ojos.</div>
+    <div class="msg-line" id="ml2" style="margin-top:10px;">Adoro cómo tus mejillas se sonrojan cada vez que nos vemos. Adoro tu cabello.</div>
+    <div class="msg-line" id="ml3" style="margin-top:10px;"><strong>No sé ser coqueto</strong>, pero de mi parte te diré una y mil veces que eres hermosa.</div>
+    <div class="msg-line" id="ml4" style="margin-top:10px;font-style:italic;color:#f9a8d4;font-family:'Great Vibes',cursive;font-size:1.3rem;">Eres mi mundo. 🤍</div>
+
+    <button class="reveal-more-btn" id="revealBtn" onclick="revealNext()">
+      🤍 &nbsp; Toca aqui mi cachetona &nbsp; 🤍
+    </button>
+
+    <div id="nextBtnS1" style="display:none;margin-top:20px;text-align:center;">
+      <button class="btn" onclick="goTo(2)" style="font-size:.85rem;padding:10px 34px;">Continuar 🤍</button>
     </div>
   </div>
-  <button class="btn-top" onclick="abrirStore()">GENERAR DIAMANTES</button>
-</nav>
+</div>
 
-<section class="hero" id="inicio">
-  <div class="hero-content">
-    <div class="hero-badge">🔥 GENERADOR OFICIAL 2026</div>
-    <h1>GENERADOR FREE FIRE ONLINE</h1>
-    <span>DIAMANTES GRATIS</span>
-    <p class="hero-sub">Accede a miles de diamantes de forma rápida y segura</p>
-    <button class="hero-btn" onclick="abrirStore()">⚡ GENERAR AHORA</button>
-  </div>
-</section>
-
-<section class="news" id="noticias">
-  <div class="section-label">ÚLTIMAS ACTUALIZACIONES</div>
-  <h2>NOTICIAS DEL JUEGO</h2>
-  <div class="section-line"></div>
-  <div class="news-grid">
-    <div class="news-card" onclick="abrirPanel()">
-      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
-      <div class="news-card-body">
-        <div class="news-cat">CÓDIGOS</div>
-        <div class="news-title">Códigos Free Fire activos hoy — lista completa y actualizada</div>
-        <div class="meta">HOY · ACTUALIZADO</div>
-      </div>
-    </div>
-    <div class="news-card" onclick="abrirPanel()">
-      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
-      <div class="news-card-body">
-        <div class="news-cat">EVENTO</div>
-        <div class="news-title">Nuevo evento de temporada: recompensas exclusivas por tiempo limitado</div>
-        <div class="meta">HOY · ACTUALIZADO</div>
-      </div>
-    </div>
-    <div class="news-card" onclick="abrirPanel()">
-      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
-      <div class="news-card-body">
-        <div class="news-cat">SKINS</div>
-        <div class="news-title">Las mejores skins de Free Fire disponibles esta semana en la tienda</div>
-        <div class="meta">HOY · ACTUALIZADO</div>
-      </div>
-    </div>
-    <div class="news-card" onclick="abrirPanel()">
-      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
-      <div class="news-card-body">
-        <div class="news-cat">GUÍA</div>
-        <div class="news-title">Cómo conseguir diamantes gratis en 2026: guía completa paso a paso</div>
-        <div class="meta">HOY · ACTUALIZADO</div>
-      </div>
-    </div>
-    <div class="news-card" onclick="abrirPanel()">
-      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
-      <div class="news-card-body">
-        <div class="news-cat">PASE ELITE</div>
-        <div class="news-title">Pase Elite nueva temporada: todo lo que incluye y cómo obtenerlo gratis</div>
-        <div class="meta">HOY · ACTUALIZADO</div>
-      </div>
-    </div>
-    <div class="news-card" onclick="abrirPanel()">
-      <img src="https://media.vandal.net/i/1280x720/4-2022/20224281553848_1.jpg">
-      <div class="news-card-body">
-        <div class="news-cat">TRUCOS</div>
-        <div class="news-title">Top 10 trucos de Free Fire que todo jugador debe conocer en 2026</div>
-        <div class="meta">HOY · ACTUALIZADO</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="stats-section" id="estadisticas">
-  <div class="stats-title">ESTADÍSTICAS DEL GENERADOR</div>
-  <div class="stats-line"></div>
-  <div class="stats">
-    <div class="stat-box"><span>ESTADO:</span><b style="color:#4ade80;">● ONLINE</b></div>
-    <div class="stat-box"><span>ÚLTIMA ACTUALIZACIÓN:</span><b id="statFecha">APR 23 2026</b></div>
-    <div class="stat-box"><span>USUARIOS EN LÍNEA:</span><b class="counter" data-target="12067">0</b></div>
-    <div class="stat-box"><span>DIAMANTES GENERADOS:</span><b class="counter" data-target="872516">0</b></div>
-    <div class="stat-box"><span>PASES DE ELITE:</span><b class="counter" data-target="825740">0</b></div>
-  </div>
-  <div class="gen-top">⚡ POR TIEMPO LIMITADO — GENERA DIAMANTES GRATIS EN FREE FIRE</div>
-  <div class="gen-title">GENERADOR DE DIAMANTES GRATIS EN GARENA FREE FIRE</div>
-  <div class="gen-content">
-    <img src="https://images.g2a.com/300x400/1x1x1/garena-free-fire-314-diamonds-garena-key-global-i10000218624022/5f6090f97e696c046b0ffe22">
-    <div class="gen-text">
-      Actualmente los diamantes son el recurso más valioso en Free Fire. Ya que con ellos puedes comprar un sinfín de artículos en la tienda como: el Pase de Batalla, adquirir skins, habilidades adicionales y más. La única desventaja que tienen estos recursos es que son de pago, por ello hemos creado un generador capaz de recargar diamantes a cualquier cuenta de Free Fire.<br><br>
-      Con este generador puedes conseguir recargar diamantes en Free Fire completamente gratis, mismos que podrás utilizar para mejorar la apariencia de tu personaje. Comprar skins, pases de batalla, gestos, todo a través de tu cuenta con los diamantes que has generado.
-      <div class="gen-note"><b>💡 Nota:</b> Los diamantes generados pueden demorar de 24 a 48 horas en acreditarse en tu cuenta. Tu cuenta nunca se verá afectada ni comprometida. Por seguridad, nunca te pediremos que ingreses tu contraseña.</div>
-    </div>
-  </div>
-</section>
-
-<section class="cta">
-  <div class="cta-overlay"></div>
-  <div class="cta-content">
-    <h1>¡OBTÉN TUS<br>DIAMANTES GRATIS!</h1>
-    <img class="pack-img" src="https://st1.techlusive.in/wp-content/uploads/2025/09/untitled-2025-09-21T105937.573.jpg?impolicy=Medium_Widthonly&w=400">
-    <button class="cta-button" onclick="abrirStore()">⚡ CONSIGUE DIAMANTES GRATIS</button>
-  </div>
-</section>
-
-<section class="faq">
-  <h1>PREGUNTAS FRECUENTES</h1>
-  <h2>¿Cómo puedo generar diamantes gratis para Free Fire?</h2>
-  <p>Para generar diamantes gratis en Free Fire, primero debes seleccionar el pack de diamantes que deseas obtener. Luego, eliges la cantidad disponible dentro del sistema, seleccionas tu plataforma (Android, iOS o PC) y colocas tu nombre o ID de usuario correctamente.</p>
-  <div class="line"></div>
-  <h2>¿Para qué sirven los diamantes en Free Fire?</h2>
-  <p>Los diamantes sirven principalmente para adquirir múltiples objetos dentro del juego como skins, personajes, mascotas, cajas especiales y el Pase Elite. Gracias a ellos puedes mejorar tu experiencia dentro del juego, acceder a contenido exclusivo y personalizar completamente tu cuenta.</p>
-  <div class="line"></div>
-  <h2>¿Generador De Diamantes Free Fire Por ID?</h2>
-  <p>Sí, este sistema funciona mediante ID. Solo necesitas ingresar tu nombre o ID de jugador para poder recibir los diamantes directamente en tu cuenta.</p>
-  <div class="line"></div>
-  <h2>¿Cómo se utilizan los diamantes en Free Fire?</h2>
-  <p>Para utilizar las gemas es necesario que primero realices una recarga de diamantes, ya sea a través de la tienda del juego o una plataforma externa. Luego buscas un objeto en la tienda y seleccionas la opción de Comprar.</p>
-  <div class="line"></div>
-  <h2>¿Cómo comprar diamantes en free fire?</h2>
-  <p>Para comprar gemas es necesario que ingreses al menú principal de Free Fire y selecciones el icono de un diamante, que se encuentra ubicado en la parte superior izquierda de la pantalla. Posteriormente, eliges una de las ofertas disponibles y confirmas la compra. Otra alternativa es adquirirlos a través de Pagostore, plataforma de Garena que ofrece múltiples métodos de pago.</p>
-  <div class="line"></div>
-  <h2>GENERADOR FREE FIRE</h2>
-  <p>El Generador de Diamantes Free Fire es totalmente gratuito y puedes utilizarlo para generar diamantes gratis en Free Fire. Tiene un límite diario de 10.000 diamantes por persona, está disponible para los usuarios de: PC, Mac y móviles. Free Fire es un juego de batalla real desarrollado por 111 Dots Studio y publicado por Garena en 2017, convirtiéndose en uno de los juegos más populares de su tipo con millones de jugadores en todo el mundo.</p>
-</section>
-
-<!-- ===== PANEL NOTICIAS ===== -->
-<div id="panel">
-  <button class="panel-close" onclick="cerrarPanel()">✕ CERRAR</button>
-
-  <div class="p-container">
-    <div class="p-main">
-      <div class="p-tag">CODIGOS</div>
-      <div class="p-title">FREE FIRE CÓDIGOS HOY, 2026. AQUÍ TIENES LA LISTA DE CÓDIGOS DE GARENA FREE FIRE QUE PUEDES CANJEAR</div>
-      <div class="p-date">PARA HOY 2026</div>
-      <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
-    </div>
-    <div class="p-sidebar">
-      <div class="p-social"><span>🔵</span><span>🐦</span><span>▶️</span><span>🎮</span><span>📷</span></div>
-      <div class="p-card">
-        <img src="https://media.tycsports.com/files/2022/03/11/400802/diamantes-free-fire_1440x810_wmk.jpg">
-        <p>RECARGA EN FREE FIRE: OBTÉN EL SARTÉN DE PORCELANA DEL DRAGÓN AL COMPRAR DIAMANTES</p>
-      </div>
-      <div class="p-card">
-        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
-        <p>FREE FIRE CÓDIGOS HOY, LISTA DE CÓDIGOS QUE PUEDES CANJEAR</p>
-      </div>
-      <div class="p-card">
-        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
-        <p>FREE FIRE CÓDIGOS ACTUALIZADOS Y RECOMPENSAS GRATIS</p>
-      </div>
+<!-- ═══ SCREEN 2 — CARTAS ═══ -->
+<div class="screen bg-2" id="s2">
+  <!-- letter panel overlay -->
+  <div class="letter-panel" id="lPanel">
+    <div class="letter-card">
+      <button class="lc-close" id="lcClose">✕</button>
+      <span class="lc-icon" id="lcIcon">🤍</span>
+      <div class="lc-title" id="lcTitle"></div>
+      <div class="divider"></div>
+      <p class="lc-body" id="lcBody"></p>
     </div>
   </div>
 
-  <div class="p-section">
-    <h2>Códigos Free Fire para hoy 2026</h2>
-    <p>Aquí tienes la lista de códigos de Garena Free Fire que puedes canjear hoy viernes 6 de febrero del 2026. La disponibilidad puede variar según la región. Algunos códigos pueden no funcionar en ciertos casos.</p>
-    <ul>
-      <li>FQ9W2E1R7T5Y3U6I</li>
-      <li>FK3J9H5G1F7D2S4A</li>
-      <li>FM6N1B8V3C4X7Z9L</li>
-      <li>FL2K6J4H8G5F3D7S</li>
-      <li>Q8M4K7L2V9R9J</li>
-      <li>A6QK1L9MRP5V</li>
-      <li>Z4QP8M6KNR2J</li>
-      <li>P7QH5K3LVJ9P</li>
-      <li>M2QP9L8KRV6K</li>
-      <li>R5QK4M7LVP1R</li>
-      <li>K9QP6K2MNL8V</li>
-      <li>V3QJ1M9KRP7V</li>
-      <li>D8MJ4Q6LVK2R</li>
-      <li>N7QK5L3MRP9J</li>
-      <li>J2QP8M1KVL6V</li>
-      <li>E9QH6K4LNP7V</li>
-      <li>S5PL7M2LRV8K</li>
-      <li>Y1QP9K6MVJ4R</li>
-      <li>O4QK2L8MRP7R</li>
-    </ul>
-    <p>Canjear Códigos Free Fire aquí: <a href="https://reward.ff.garena.com/" target="_blank">reward.ff.garena.com</a></p>
-  </div>
+  <div style="z-index:5;width:100%;max-width:700px;">
+    <div class="eyebrow" style="text-align:center;margin-bottom:6px;">🤍 palabras desde mi corazón 🤍</div>
+    <div style="font-family:'Great Vibes',cursive;font-size:clamp(1.8rem,4vw,2.8rem);background:linear-gradient(135deg,#f9a8d4,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:26px;">Abre cada carta</div>
 
-  <div class="p-section-divider"></div>
-
-  <div class="p-section">
-    <h2>¿CÓMO CANJEAR CÓDIGOS DE FREE FIRE?</h2>
-    <p>Y aquí tienes una guía paso a paso para redimir los códigos en Free Fire:</p>
-    <ol>
-      <li><strong>Abre Free Fire en tu dispositivo:</strong> Inicia el juego desde tu teléfono móvil o tableta.</li>
-      <li><strong>Accede a la sección de códigos:</strong> En la pantalla principal, toca el icono de perfil que generalmente se encuentra en la esquina superior izquierda. Luego, selecciona el botón de "Recompensas" o "Canjear códigos", que suele estar representado por un icono de regalo o una caja.</li>
-      <li><strong>Introduce el código:</strong> En el campo de texto que aparece, ingresa el código de recompensa que tienes. Asegúrate de escribirlo exactamente como lo has recibido, sin errores ni espacios adicionales.</li>
-      <li><strong>Confirma el canje:</strong> Después de ingresar el código, toca el botón de confirmación para validar el canje. Si el código es válido, recibirás una notificación con la recompensa.</li>
-      <li><strong>Revisa tus recompensas:</strong> Regresa al menú principal y revisa tu inventario o buzón de recompensas para ver los artículos que has recibido.</li>
-      <li><strong>Disfruta de tus premios:</strong> Utiliza las recompensas obtenidas en el juego según tus necesidades y preferencias.</li>
-      <li>Recuerda que la disponibilidad de los códigos puede variar y algunos pueden expirar rápidamente, así que ¡asegúrate de canjearlos lo antes posible!</li>
-    </ol>
-  </div>
-
-  <div class="p-section-divider"></div>
-
-  <div class="p-section">
-    <h2>PARA QUÉ REGIÓN SON VÁLIDOS LOS CÓDIGOS FF</h2>
-    <p>Actualmente los Códigos de Free Fire son válidos para esta lista de regiones que dejaré aquí abajo, recuerda que según que código puede variar y estar solo activo en una región u otra, pero siempre publicaremos una gran lista mixta para todas las regiones como Norte América, Sudamérica (LATAM: Latinoamérica y Centro América), Asia, Europa, África y Oceanía.</p>
-    <p>Esta es la lista de algunas recompensas que puedes conseguir gratis con los códigos de Free Fire:</p>
-    <p><strong>Diamantes, Ropas y Skins, Apariencias de Armas, Mascotas, Personajes</strong></p>
-    <h2>¿LOS CÓDIGOS DE FREE FIRE ANTIGUOS FUNCIONAN?</h2>
-    <p>Normalmente no, ya que son de eventos especiales temporales la mayoría, pero existen algunos que nunca expiran por lo cual siempre funcionan, son pocos y normalmente son muy exclusivos por lo cual los tienen un grupo reducido de personas y no son públicos la mayoría.</p>
-    <h2>QUE SON LOS CODIGOS DE FREE FIRE</h2>
-    <p>Los códigos Free Fire son una combinación de 12 números y letras en mayúscula que una vez la introduces en la página oficial habilitada para ellos, podrás canjearlos por increíbles premios.</p>
-    <p>Estos códigos pueden estar en tarjetas impresas o en regalos digitales.</p>
-    <p>Todos los códigos del juego tienen una vigencia, lo que quiere decir que se pueden vencer, intenta siempre canjearlos tan pronto los consigas.</p>
-  </div>
-
-  <div class="p-section-divider"></div>
-
-  <div class="p-section">
-    <h2>¿QUÉ PUEDO GANAR CON LOS CÓDIGOS?</h2>
-    <p>En el momento en que canjeas un código la plataforma de Garena escoge aleatoriamente un premio para ti, los premios pueden variar entre muchas cosas, aquí te cuento que podrías ganar al momento de canjear un código Free Fire.</p>
-    <p>Una mascota nueva; podrás tener un compañero de juego y ayuda en tus habilidades para hacer Booyah.</p>
-    <p>Prendas de vestir nuevas; porque siempre es importante lucir con lo último de la moda. Accesorios; ya sea desde un paracaídas único hasta máscaras increíbles, tu personaje podría jugar con los últimos equipamientos del juego.</p>
-    <p>Diamantes y oro; estos son de los mejores premios, pues con los diamantes y el oro podrás comprar y conseguir innumerables premios y lo mejor es que tú escoges exactamente lo que deseas.</p>
-    <h2>¿PARA QUÉ SIRVEN LOS CÓDIGOS FREE FIRE?</h2>
-    <p>Por lo general se utilizan con la finalidad de obtener algún premio en el juego, ya sean prendas de vestir, movimientos, diamantes, personajes, etc.</p>
-    <h2>¿DÓNDE CONSIGO ESTOS CÓDIGOS?</h2>
-    <p>Existen diferentes formas de conseguir estos códigos, pero ten cuidado no todas serán seguras y no siempre te servirán.</p>
-    <p>Casi siempre Garena regala códigos canjeables del juego en sus eventos, también lo suelen hacer en sus redes sociales oficiales, siempre con la condición de que cumplas algún objetivo puntual, estos códigos nunca tendrán ningún valor económico, son completamente gratis.</p>
-    <p>Existen muchas webs, youtubers, influencers, etc. donde suben los códigos de recompensa free fire, pero siempre debes asegurarte de que sean confiables y estén actualizados.</p>
-  </div>
-
-  <div class="p-section-divider"></div>
-
-  <div class="p-section">
-    <h2>¿DÓNDE ENCUENTRO LAS RECOMPENSAS QUE GANÉ?</h2>
-    <p>Las especificaciones de los premios que has canjeado las podrás encontrar:</p>
-    <p>Dirigiéndote al símbolo de correo recibido del juego que encontrarás en la esquina superior derecha y allí podrás reclamar todo lo que ganaste.</p>
-    <p>En 'tu colección' encontrarás los objetos físicos que ganaste como trajes, mascotas, accesorios etc.; por otro lado, los premios de oro o diamantes se habrán añadido directamente a tu cuenta.</p>
-    <h2>CUÁNTO TIEMPO SE TARDAN EN DARME LOS PREMIOS DE LOS CODIGOS</h2>
-    <p>Una vez canjeas los códigos de Free Fire y obtienes tus premios, estarán en el juego en un tiempo máximo de 30 minutos.</p>
-    <p>Recuerda que Garena no tiene una hora exacta para regalar los códigos, por lo tanto, debes estar atento a sus redes sociales oficiales o a la web que te nombramos hace un momento.</p>
-    <h2>¿TODOS LOS CODIGOS SIRVEN?</h2>
-    <p>Los códigos Free Fire tienen un vencimiento ya sea de años, meses, días o incluso horas, una vez este código se vence ya no se puede canjear por ningún premio.</p>
-    <p>Muchas veces estos códigos puede que no te funcionen pues algunos dependen del país donde los intentes canjear.</p>
-    <p>En caso de que tengas dificultades con las plataformas, los códigos o tu cuenta deberás dirigirte al soporte de la compañía para dar solución a tu problema.</p>
-  </div>
-
-  <div class="p-related">
-    <h2>TE PODRÍA INTERESAR</h2>
-    <div class="p-cards-row">
-      <div class="p-rel-card" onclick="abrirPanel()">
-        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
-        <p>FREE FIRE CÓDIGOS HOY 2026 🔥 LISTA ACTUALIZADA PARA CANJEAR RECOMPENSAS GRATIS</p>
+    <div class="envelopes-wrap">
+      <div class="env" id="env0" onclick="openLetter(0)">
+        <div class="env-inner">
+          <span class="env-icon">🤍</span>
+          <div class="env-lbl">Carta I</div>
+          <button class="env-btn">Abrir</button>
+        </div>
       </div>
-      <div class="p-rel-card" onclick="abrirPanel()">
-        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
-        <p>NUEVOS CÓDIGOS FREE FIRE HOY 2026 🎁 CONSIGUE DIAMANTES Y SKINS GRATIS</p>
+      <div class="env" id="env1" onclick="openLetter(1)">
+        <div class="env-inner">
+          <span class="env-icon">🤍</span>
+          <div class="env-lbl">Carta II</div>
+          <button class="env-btn">Abrir</button>
+        </div>
       </div>
-      <div class="p-rel-card" onclick="abrirPanel()">
-        <img src="https://e-ad.americatv.com.pe/polideportivo-free-fire-estos-son-codigos-gratis-hoy-28-octubre-n422211-580x348-984534.jpg">
-        <p>CÓDIGOS GRATIS FREE FIRE HOY 2026 🚀 CANJEA RECOMPENSAS EXCLUSIVAS</p>
+      <div class="env" id="env2" onclick="openLetter(2)">
+        <div class="env-inner">
+          <span class="env-icon">🤍</span>
+          <div class="env-lbl">Carta III</div>
+          <button class="env-btn">Abrir</button>
+        </div>
+      </div>
+      <div class="env" id="env3" onclick="openLetter(3)">
+        <div class="env-inner">
+          <span class="env-icon">🤍</span>
+          <div class="env-lbl">Carta IV</div>
+          <button class="env-btn">Abrir</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- progress dots -->
+    <div class="progress-row" id="progRow" style="margin-top:22px;">
+      <div class="prog-dot" id="pd0"></div>
+      <div class="prog-dot" id="pd1"></div>
+      <div class="prog-dot" id="pd2"></div>
+      <div class="prog-dot" id="pd3"></div>
+    </div>
+
+    <div id="nextBtnS2" style="display:none;margin-top:22px;text-align:center;">
+      <button class="btn" onclick="goTo(3)" style="font-size:.85rem;padding:10px 34px;">Continuar 🤍</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SCREEN 3 — MUNDO ═══ -->
+<div class="screen bg-4" id="s3">
+  <div class="world-wrap">
+    <div class="sphere" id="worldSphere">
+      <div class="continent" style="width:90px;height:55px;top:28%;left:12%;transform:rotate(-12deg);"></div>
+      <div class="continent" style="width:65px;height:75px;top:14%;left:52%;transform:rotate(8deg);"></div>
+      <div class="continent" style="width:55px;height:45px;top:58%;left:38%;transform:rotate(-4deg);"></div>
+      <div style="position:absolute;inset:0;background:radial-gradient(circle at 62% 62%,transparent 48%,rgba(0,0,0,.22));border-radius:50%;"></div>
+    </div>
+    <!-- floating msgs around sphere -->
+    <div class="fmsg" style="top:-28px;left:50%;transform:translateX(-50%);animation-duration:3s;animation-delay:0s;">🤍 Eres perfecta</div>
+    <div class="fmsg" style="top:70px;right:-95px;animation-duration:3.5s;animation-delay:.6s;">Mi luna 🤍</div>
+    <div class="fmsg" style="bottom:70px;right:-90px;animation-duration:4s;animation-delay:1.1s;">🤍 Mi deseo</div>
+    <div class="fmsg" style="bottom:-26px;left:50%;transform:translateX(-50%);animation-duration:3.2s;animation-delay:.3s;">Eres única 🤍</div>
+    <div class="fmsg" style="top:70px;left:-88px;animation-duration:3.8s;animation-delay:.8s;">🤍 Miak miak</div>
+    <div class="fmsg" style="bottom:70px;left:-92px;animation-duration:4.2s;animation-delay:1.5s;">Mi favorita 🤍</div>
+  </div>
+
+  <div class="world-text">
+    <div class="gcard">
+      <div class="eyebrow">🤍 en este mundo 🤍</div>
+      <div style="font-family:'Great Vibes',cursive;font-size:clamp(1.6rem,4vw,2.4rem);background:linear-gradient(135deg,#f9a8d4,#93c5fd);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:14px;">Nuestro mundo</div>
+      <div class="divider" style="margin:0 0 16px;"></div>
+      <p style="font-family:'Cormorant Garamond',serif;font-size:1.1rem;line-height:1.85;color:rgba(255,255,255,.78);">
+        En cada rincón de este mundo hay un mensaje para ti.<br><br>
+        <em style="color:#f9a8d4;">Eres la única mujer a quien le demuestro mi lado lindo</em>, sin importar las veces que peleamos.
+      </p>
+      <div style="margin-top:22px;text-align:center;">
+        <button class="btn" onclick="goTo(4)" style="font-size:.85rem;padding:10px 34px;">Al final 🤍</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ===== STORE OVERLAY ===== -->
-<div id="storeOverlay">
-  <div class="store-header">
-    <div class="store-header-title">💎 FREE FIRE STORE</div>
-    <button class="store-close-btn" onclick="cerrarStore()">✕ CERRAR</button>
-  </div>
-  <div class="store-steps" id="storeSteps">
-    <div class="store-step active" id="step1"><div class="step-num">1</div>DIAMANTES</div>
-    <div class="step-divider"></div>
-    <div class="store-step" id="step2"><div class="step-num">2</div>PLATAFORMA</div>
-    <div class="step-divider"></div>
-    <div class="store-step" id="step3"><div class="step-num">3</div>USUARIO</div>
-  </div>
-  <div id="storePantalla1" class="store-pantalla store-activa">
-    <div class="store-inner-title">ELIGE TU PACK</div>
-    <div class="store-inner-sub">Selecciona la cantidad de diamantes que deseas generar</div>
-    <div class="store-container">
-      <div class="store-card" onclick="storeSeleccionar(this,520)">
-        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
-        <div class="store-card-body"><div class="store-card-diamonds">💎 520</div><div class="store-card-label">diamantes</div></div>
-      </div>
-      <div class="store-card" onclick="storeSeleccionar(this,1060)">
-        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
-        <div class="store-card-body"><div class="store-card-diamonds">💎 1,060</div><div class="store-card-label">diamantes</div></div>
-      </div>
-      <div class="store-card" onclick="storeSeleccionar(this,2180)">
-        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
-        <div class="store-card-body"><div class="store-card-diamonds">💎 2,180</div><div class="store-card-label">diamantes</div></div>
-      </div>
-      <div class="store-card" onclick="storeSeleccionar(this,5600)">
-        <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg">
-        <div class="store-card-body"><div class="store-card-diamonds">💎 5,600</div><div class="store-card-label">diamantes</div></div>
-      </div>
-    </div>
-    <button class="store-btn" onclick="storeGenerar()">CONTINUAR →</button>
-    <p id="storeMensaje" style="margin-top:15px;color:#ff6b6b;font-size:14px;"></p>
-  </div>
-  <div id="storePantalla2" class="store-pantalla">
-    <div class="store-inner-title">¿DÓNDE JUEGAS?</div>
-    <div class="store-inner-sub">Selecciona tu plataforma de juego</div>
-    <div class="store-opciones">
-      <div class="store-opcion" onclick="storeFinalizar()"><span class="plat-icon">💻</span>PC / MAC</div>
-      <div class="store-opcion" onclick="storeFinalizar()"><span class="plat-icon">📱</span>MÓVIL</div>
+<!-- ═══ SCREEN 4 — FINAL ═══ -->
+<div class="screen bg-5" id="s4">
+  <!-- Stage 1: título + botón -->
+  <div id="f-stage1" style="text-align:center;position:relative;z-index:5;">
+    <div class="final-title">Para siempre,<br>mi amor</div>
+    <span class="final-hearts">🤍🤍🤍</span>
+    <div style="margin-top:28px;">
+      <button class="btn" onclick="startFinalReveal()" style="font-size:.88rem;padding:12px 38px;">
+        Un mensaje para ti 🤍
+      </button>
     </div>
   </div>
-  <div id="storePantalla3"></div>
+
+  <!-- Stage 2: mensaje typewriter -->
+  <div id="f-stage2" style="display:none;text-align:center;max-width:600px;width:100%;position:relative;z-index:5;">
+    <div class="gcard" style="padding:40px 36px;">
+      <div class="eyebrow" style="text-align:center;margin-bottom:16px;">🤍 TE AMOO MI LINDOTAA 🤍</div>
+      <p id="fMsgText" style="font-family:'Cormorant Garamond',serif;font-size:1.18rem;line-height:2;color:rgba(255,255,255,.85);min-height:120px;"></p>
+      <span id="fCursor" style="display:inline-block;width:2px;height:1.2em;background:#f472b6;vertical-align:middle;margin-left:2px;animation:blinkC .7s step-end infinite;"></span>
+      <!-- aparece al terminar de escribir -->
+      <div id="fSignWrap" style="opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease;margin-top:22px;">
+        <div class="divider"></div>
+        <div class="final-sign">Mi blanquita bella 💗</div>
+        <div style="margin-top:22px;display:flex;gap:14px;flex-wrap:wrap;justify-content:center;">
+          <button class="btn" onclick="bigParty()" style="font-size:.82rem;padding:10px 28px;">💗 Celebrar</button>
+          <button class="btn" onclick="goTo(0)" style="font-size:.82rem;padding:10px 28px;border-color:rgba(147,197,253,.4);color:rgba(147,197,253,.6);">Volver al inicio</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-window.addEventListener('scroll',()=>{
-  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>60);
+// ── CURSOR ──
+const cur = document.getElementById('cursor');
+document.addEventListener('mousemove', e => {
+  cur.style.left = e.clientX + 'px';
+  cur.style.top  = e.clientY + 'px';
 });
 
-function animateCounter(el){
-  const target = parseInt(el.dataset.target);
-  const duration = 2000;
-  const step = target / (duration / 16);
-  let current = 0;
-  const timer = setInterval(()=>{
-    current += step;
-    if(current >= target){current = target;clearInterval(timer);}
-    el.textContent = Math.floor(current).toLocaleString('es-ES');
-  }, 16);
-}
-const counterObserver = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){animateCounter(e.target);counterObserver.unobserve(e.target);}});
-},{threshold:0.3});
-document.querySelectorAll('.counter').forEach(el=>counterObserver.observe(el));
+// ── PARTICLES ──
+(function(){
+  const c = document.getElementById('particles');
+  for(let i=0;i<32;i++){
+    const p=document.createElement('div');
+    p.className='part'; p.textContent='🤍';
+    p.style.left=(Math.random()*100)+'vw';
+    p.style.animationDuration=(7+Math.random()*9)+'s';
+    p.style.animationDelay=(Math.random()*14)+'s';
+    p.style.fontSize=(.6+Math.random()*.6)+'rem';
+    c.appendChild(p);
+  }
+})();
 
-function abrirPanel(){
-  var p = document.getElementById("panel");
-  p.style.display = "block";
-  p.scrollTop = 0;
-  document.body.style.overflow = "hidden";
-}
-function cerrarPanel(){
-  document.getElementById("panel").style.display = "none";
-  document.body.style.overflow = "";
+// ── INTRO BG HEARTS ──
+(function(){
+  const el=document.getElementById('introbg');
+  for(let i=0;i<18;i++){
+    const h=document.createElement('div');
+    h.className='part'; h.textContent='🤍';
+    h.style.left=(Math.random()*100)+'vw';
+    h.style.animationDuration=(4+Math.random()*5)+'s';
+    h.style.animationDelay=(Math.random()*6)+'s';
+    h.style.fontSize=(1+Math.random())+'rem';
+    el.appendChild(h);
+  }
+})();
+
+// ── SCREEN NAVIGATION ──
+const TOTAL = 5;
+let current = 0;
+
+function goTo(n) {
+  if(n === current) return;
+  const prev = document.getElementById('s'+current);
+  const next = document.getElementById('s'+n);
+  const dir = n > current ? 'exit-left' : 'exit-right';
+  prev.classList.add(dir);
+  setTimeout(()=>{ prev.classList.remove('active',dir); }, 580);
+  next.classList.add('active');
+
+  // reset final typewriter if leaving screen 4
+  if(current === 4){
+    clearTimeout(typingTimer);
+    document.getElementById('f-stage1').style.display = 'block';
+    document.getElementById('f-stage2').style.display = 'none';
+    document.getElementById('fMsgText').innerHTML = '';
+    document.getElementById('fCursor').style.display = 'inline-block';
+    const sw = document.getElementById('fSignWrap');
+    sw.style.opacity = '0'; sw.style.transform = 'translateY(18px)';
+  }
+
+  // reset letters when going back to inicio
+  if(n === 0){
+    openedCount = 0;
+    for(let k=0;k<4;k++){
+      const envEl = document.getElementById('env'+k);
+      if(envEl) envEl.classList.remove('opened');
+      const pdEl = document.getElementById('pd'+k);
+      if(pdEl) pdEl.classList.remove('done');
+    }
+    document.getElementById('nextBtnS2').style.display = 'none';
+  }
+
+  current = n;
+  updateUI();
+  if(n===1) initS1();
+  if(n===4) setTimeout(()=>spawnHearts(20), 600);
 }
 
-function setStep(n){
-  for(let i=1;i<=3;i++){
-    const el = document.getElementById('step'+i);
-    el.classList.remove('active','done');
-    if(i < n) el.classList.add('done');
-    if(i === n) el.classList.add('active');
+function updateUI(){
+  // dots
+  document.querySelectorAll('.sc-dot').forEach((d,i)=>d.classList.toggle('on',i===current));
+  // hint
+  const hint=document.getElementById('nextHint');
+  hint.style.opacity = current===TOTAL-1 ? '0' : '.4';
+}
+
+// ── SWIPE SUPPORT ──
+let tx=0;
+document.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const dx=e.changedTouches[0].clientX-tx;
+  if(Math.abs(dx)>60){
+    if(dx<0 && current<TOTAL-1) goTo(current+1);
+    if(dx>0 && current>0) goTo(current-1);
+  }
+},{passive:true});
+
+// ── SCREEN 1: REVEAL LINES ──
+let lineIdx = 0;
+const LINES = 5;
+function initS1(){
+  // reset
+  lineIdx=0;
+  for(let i=0;i<LINES;i++) document.getElementById('ml'+i).classList.remove('revealed');
+  document.getElementById('revealBtn').classList.remove('done');
+  document.getElementById('revealBtn').style.display='block';
+  document.getElementById('nextBtnS1').style.display='none';
+  // show first line immediately
+  revealNext();
+}
+function revealNext(){
+  if(lineIdx < LINES){
+    document.getElementById('ml'+lineIdx).classList.add('revealed');
+    lineIdx++;
+  }
+  if(lineIdx >= LINES){
+    document.getElementById('revealBtn').classList.add('done');
+    document.getElementById('revealBtn').style.display='none';
+    document.getElementById('nextBtnS1').style.display='block';
+    spawnHearts(20);
   }
 }
 
-let storeSeleccion = 0;
-function abrirStore(){
-  storeSeleccion = 0;
-  document.querySelectorAll(".store-card").forEach(c=>c.classList.remove("selected"));
-  document.getElementById("storeMensaje").innerHTML = "";
-  document.getElementById("storePantalla1").className = "store-pantalla store-activa";
-  document.getElementById("storePantalla2").className = "store-pantalla";
-  document.getElementById("storePantalla3").style.display = "none";
-  setStep(1);
-  document.getElementById("storeOverlay").style.display = "block";
-  document.getElementById("storeOverlay").scrollTop = 0;
-  document.body.style.overflow = "hidden";
-}
-function cerrarStore(){
-  document.getElementById("storeOverlay").style.display = "none";
-  document.body.style.overflow = "";
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-function storeSeleccionar(el, cant){
-  document.querySelectorAll(".store-card").forEach(c=>c.classList.remove("selected"));
-  el.classList.add("selected");
-  storeSeleccion = cant;
-  document.getElementById("storeMensaje").innerHTML = "";
-}
-function storeGenerar(){
-  if(storeSeleccion === 0){document.getElementById("storeMensaje").innerHTML = "⚠️ Selecciona un pack de diamantes";return;}
-  document.getElementById("storeMensaje").innerHTML = "⏳ Procesando...";
-  setTimeout(()=>{
-    document.getElementById("storePantalla1").className = "store-pantalla";
-    document.getElementById("storePantalla2").className = "store-pantalla store-activa";
-    setStep(2);
-  }, 800);
-}
-function storeFinalizar(){
-  document.getElementById("storePantalla2").className = "store-pantalla";
-  document.getElementById("storePantalla3").innerHTML = buildPantalla3();
-  document.getElementById("storePantalla3").style.display = "block";
-  setStep(3);
-}
-function buildPantalla3(){
-  return `<div id="storePantalla3Inner" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,22,40,0.97),rgba(15,58,95,0.97));display:flex;flex-direction:column;justify-content:center;align-items:center;">
-    <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;letter-spacing:2px;margin-bottom:6px;">INGRESA TU ID</div>
-    <div style="color:rgba(255,255,255,0.4);font-size:13px;margin-bottom:20px;letter-spacing:1px;">Tu ID de usuario de Free Fire</div>
-    <input id="storeUserID" placeholder="Ej: 123456789" style="padding:14px 20px;width:280px;border:none;border-bottom:2px solid rgba(255,196,0,0.5);background:rgba(255,255,255,0.05);color:white;text-align:center;font-family:'Rajdhani',sans-serif;font-size:18px;font-weight:600;border-radius:4px 4px 0 0;outline:none;">
-    <img src="https://www.gamersoft.net/wp-content/uploads/2023/04/garena-free-fire.webp" style="width:280px;margin-top:25px;border-radius:12px;box-shadow:0 10px 40px rgba(0,0,0,0.5);">
-    <button class="store-btn" style="margin-top:25px;" onclick="storeRecargar()">⚡ ¡RECARGAR AHORA!</button>
-    <p id="storeFinalMsg" style="margin-top:10px;color:#ffeb3b;font-size:14px;"></p>
-  </div>`;
-}
-function storeRecargar(){
-  let id = document.getElementById("storeUserID").value.trim();
-  if(!id){document.getElementById("storeFinalMsg").innerHTML = "⚠️ Ingresa tu ID de usuario";return;}
-  document.getElementById("storePantalla3").innerHTML = `<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,22,40,0.97),rgba(15,58,95,0.97));display:flex;justify-content:center;align-items:center;">
-    <div style="background:rgba(15,23,42,0.95);padding:35px;border-radius:16px;width:340px;text-align:center;border:1px solid rgba(255,255,255,0.1);">
-      <div style="font-family:'Orbitron',sans-serif;font-size:16px;font-weight:700;letter-spacing:2px;margin-bottom:20px;">🔄 PROCESANDO</div>
-      <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg?__scale=w:1200,h:900,t:2" style="width:100%;border-radius:10px;margin-bottom:20px;">
-      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:5px;">ID: <b style="color:white;">${id}</b></div>
-      <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:20px;">Pack: <b style="color:#ffc400;">${storeSeleccion.toLocaleString('es-ES')} 💎</b></div>
-      <div style="height:8px;background:rgba(255,255,255,0.08);border-radius:8px;overflow:hidden;margin-bottom:12px;">
-        <div id="storeBarra" style="height:100%;width:0%;background:linear-gradient(90deg,#00d4ff,#00ff88);border-radius:8px;transition:width .3s;"></div>
-      </div>
-      <p id="storeEstado" style="font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:1px;color:rgba(255,255,255,0.5);">Conectando al servidor...</p>
-    </div>
-  </div>`;
-  let progreso = 0;
-  const msgs = ['','','Verificando usuario...','','','Enviando diamantes...','','','Finalizando...','',''];
-  let intervalo = setInterval(()=>{
-    progreso += 10;
-    var barra = document.getElementById("storeBarra");
-    var estado = document.getElementById("storeEstado");
-    if(barra) barra.style.width = progreso + "%";
-    if(msgs[progreso/10] && estado) estado.innerHTML = msgs[progreso/10];
-    if(progreso >= 100){
-      clearInterval(intervalo);
-      setTimeout(()=>{
-        document.getElementById("storePantalla3").innerHTML = `<div style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,rgba(10,22,40,0.97),rgba(15,58,95,0.97));display:flex;justify-content:center;align-items:center;">
-          <div style="background:rgba(15,23,42,0.95);padding:35px;border-radius:16px;width:340px;text-align:center;border:1px solid rgba(0,255,136,0.3);box-shadow:0 0 40px rgba(0,255,136,0.15);">
-            <div style="font-size:40px;margin-bottom:10px;">✅</div>
-            <div style="font-family:'Orbitron',sans-serif;font-size:18px;font-weight:700;color:#4ade80;letter-spacing:2px;margin-bottom:20px;">¡RECARGA LISTA!</div>
-            <img src="https://www.geekmi.news/img/2021/07/27/diamantes1.jpg?__scale=w:1200,h:900,t:2" style="width:100%;border-radius:10px;margin-bottom:20px;">
-            <div style="font-size:14px;color:rgba(255,255,255,0.6);margin-bottom:5px;">ID: <b style="color:white;">${id}</b></div>
-            <div style="font-size:18px;font-family:'Orbitron',sans-serif;color:#ffc400;margin:10px 0 20px;font-weight:700;">${storeSeleccion.toLocaleString('es-ES')} DIAMANTES 💎</div>
-            <button onclick="cerrarStore()" style="background:linear-gradient(135deg,#ffc400,#ff8c00);color:black;padding:12px 28px;border:none;border-radius:6px;font-family:'Orbitron',sans-serif;font-weight:700;cursor:pointer;font-size:13px;letter-spacing:1px;">VOLVER AL INICIO</button>
-          </div>
-        </div>`;
-      }, 400);
+// ── SCREEN 2: LETTERS ──
+const letters = [
+  {
+    title:'Para ti',
+    body:`Eres tan linda... quiero decir, no solo tu apariencia,
+sino también <em>tu personalidad</em>, las cosas que haces,
+cómo demuestras tu amor hacia las personas que quieres,
+<em>tu voz, tu sonrisa</em>, la forma de decir las cosas claras cuando estás mal.
+<br><br><strong>Eres tan perfecta.</strong>`
+  },
+  {
+    title:'Mi promesa',
+    body:`Siempre sé sincera conmigo, como siempre te lo he pedido.
+Sin importar el daño que puedas hacerme,
+<em>siempre dime la verdad</em>... eso dirá mucho de ti
+y de lo mucho que me amas.
+<br><br>Prefiero eso a <strong>vivir engañado y darle vueltas a todo.</strong>`
+  },
+  {
+    title:'Como la luna',
+    body:`Te diría que eres hermosa como una estrella,
+pero mejor te digo que eres hermosa <em>como la luna</em>...
+<br><br>Porque estrellas hay muchas,
+<strong>y luna solo una.</strong>`
+  },
+  {
+    title:'Para siempre',
+    body:`Siempre serás esa parte que me faltará para respirar
+y vivir día a día.
+<br><br><em>Nunca cambies.</em>
+Nunca sabrás el daño que puedes hacerme...
+<br><br><strong>Mi blanquita, mi pasta de dientes PUAJAJA me pashe me pashe. 🤍</strong>`
+   }
+];
+let openedCount = 0;
+
+function openLetter(i){
+  const l = letters[i];
+  document.getElementById('lcTitle').textContent = l.title;
+  document.getElementById('lcBody').innerHTML = l.body;
+  document.getElementById('lPanel').classList.add('open');
+  document.body.style.overflow='hidden';
+  spawnHearts(12);
+  // mark as opened
+  if(!document.getElementById('env'+i).classList.contains('opened')){
+    document.getElementById('env'+i).classList.add('opened');
+    document.getElementById('pd'+i).classList.add('done');
+    openedCount++;
+    if(openedCount>=4){
+      setTimeout(()=>{document.getElementById('nextBtnS2').style.display='block';},400);
     }
-  }, 300);
+  }
 }
+document.getElementById('lcClose').addEventListener('click',()=>{
+  document.getElementById('lPanel').classList.remove('open');
+  document.body.style.overflow='';
+});
+document.getElementById('lPanel').addEventListener('click',e=>{
+  if(e.target===document.getElementById('lPanel')){
+    document.getElementById('lPanel').classList.remove('open');
+    document.body.style.overflow='';
+  }
+});
+
+// ── CONFETTI / HEARTS ──
+function spawnHearts(n){
+  const c=document.getElementById('confetti');
+  for(let i=0;i<n;i++){
+    const h=document.createElement('div');
+    h.className='conf'; h.textContent='🤍';
+    h.style.left=(Math.random()*100)+'vw';
+    h.style.top='-30px';
+    h.style.animationDuration=(2+Math.random()*2.5)+'s';
+    h.style.animationDelay=(Math.random()*1.8)+'s';
+    h.style.fontSize=(.8+Math.random()*1)+'rem';
+    c.appendChild(h);
+  }
+  setTimeout(()=>{
+    const all=[...c.querySelectorAll('.conf')];
+    all.slice(0,n).forEach(el=>el.remove());
+  },5500);
+}
+
+function bigParty(){
+  spawnHearts(90);
+  // extra sparkle burst
+  let t=0;
+  for(let w=0;w<4;w++){
+    setTimeout(()=>spawnHearts(20),t);
+    t+=600;
+  }
+}
+
+// Auto party on final
+const fObs=new IntersectionObserver(()=>{},{threshold:1});
+// use screen active check instead
+const _origGoTo=goTo;
+// override to detect final
+window.goTo=function(n){
+  _origGoTo(n);
+  if(n===4) setTimeout(()=>spawnHearts(50),500);
+};
+
+// ── FINAL TYPEWRITER ──
+const FINAL_MSG = "Solo quiero decirte que sin importar las veces que peleemos, nunca dejemos de hablarnos. Hablar contigo me mata el aburrimiento... puedo tener un mal día y solo con verte puedes sacarme una sonrisa. Si algún día ya no estoy para ti, nunca me olvides. Yo nunca dejaré de hacerlo. TE ADORO MUCHO BLANQUITA BELLA 💗💗";
+let typingTimer = null;
+let finalStarted = false;
+
+function startFinalReveal(){
+  document.getElementById('f-stage1').style.display = 'none';
+  document.getElementById('f-stage2').style.display = 'block';
+  spawnHearts(18);
+  typeMessage(FINAL_MSG, 'fMsgText', 38, function(){
+    document.getElementById('fCursor').style.display = 'none';
+    const sw = document.getElementById('fSignWrap');
+    sw.style.opacity = '1';
+    sw.style.transform = 'translateY(0)';
+    spawnHearts(30);
+    setTimeout(()=>bigParty(), 800);
+  });
+}
+
+function typeMessage(text, elId, speed, onDone){
+  const el = document.getElementById(elId);
+  el.innerHTML = '';
+  let i = 0;
+  function tick(){
+    if(i < text.length){
+      const ch = text[i];
+      el.innerHTML += ch;
+      i++;
+      typingTimer = setTimeout(tick, ch === ' ' ? speed * 0.5 : (text[i-1] === '.' || text[i-1] === ',' ? speed * 6 : speed));
+    } else {
+      if(onDone) onDone();
+    }
+  }
+  tick();
+}
+
+// init
+updateUI();
 </script>
 </body>
 </html>
+HTMLEOF
+echo "ok"
